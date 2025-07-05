@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { FiPhone, FiMail } from "react-icons/fi";
 
+
+
+// Then use <TopBar /> in your Header component
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -14,7 +18,6 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Close mobile menu on window resize > lg breakpoint (optional but nice)
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
@@ -30,7 +33,7 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
-        scrolled ? "bg-teal-700/80 backdrop-blur-md shadow-md": "bg-transparent"
+        scrolled ? "bg-teal-700/80 backdrop-blur-md shadow-md" : "bg-transparent"
       }`}
     >
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
@@ -46,31 +49,32 @@ export default function Header() {
             </a>
           </div>
 
-          {/* Desktop menu */}
-          <div className="hidden lg:flex lg:items-center lg:ml-auto lg:space-x-10">
+          {/* Desktop menu - Reduced spacing */}
+          <div className="hidden lg:flex lg:items-center lg:gap-3">
             {navItems.map((item) => (
               <a
                 key={item}
                 href="#"
-                className="text-xl font-medium text-white transition-all duration-200 hover:text-teal-200 focus:text-teal-300"
+                className="text-lg font-medium text-white transition-all duration-200 hover:text-teal-200 focus:text-teal-300 px-2 py-1"
               >
                 {item}
               </a>
             ))}
-
-            <a
-              href="#"
-              role="button"
-              className="items-center justify-center px-4 py-3 ml-10 text-xl font-semibold text-white transition-all duration-200 bg-teal-700 border border-transparent rounded-md hover:bg-teal-800 focus:bg-teal-900"
-            >
-              Get started now
-            </a>
+            
+            {/* Search bar with reduced left margin */}
+            <form className="ml-2" role="search" onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="search"
+                placeholder="Search..."
+                className="w-72 px-4 py-1.5 rounded-full border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 text-sm"
+              />
+            </form>
           </div>
 
           {/* Mobile menu button */}
           <button
             type="button"
-            className="inline-flex p-2 text-black rounded-md lg:hidden  transition-all duration-200"
+            className="inline-flex p-2 text-black rounded-md lg:hidden transition-all duration-200"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle menu"
@@ -114,30 +118,27 @@ export default function Header() {
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <nav className="pt-4 pb-6 bg-white border border-gray-200 rounded-md shadow-md lg:hidden">
+            {/* Search bar (mobile) */}
+            <form className="px-4 mb-3" role="search" onSubmit={(e) => e.preventDefault()}>
+              <input
+                type="search"
+                placeholder="Search..."
+                className="w-full px-3 py-1.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400 text-sm"
+              />
+            </form>
             <div className="flow-root">
-              <div className="flex flex-col px-6 -my-2 space-y-1">
+              <div className="flex flex-col px-4 -my-1 space-y-0.5">
                 {navItems.map((item) => (
                   <a
                     key={item}
                     href="#"
-                    className="inline-flex py-2 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600"
-                    onClick={() => setMobileMenuOpen(false)} // close menu on click
+                    className="inline-flex py-1.5 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600 px-2"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
                     {item}
                   </a>
                 ))}
               </div>
-            </div>
-
-            <div className="px-6 mt-6">
-              <a
-                href="#"
-                role="button"
-                className="inline-flex justify-center px-4 py-3 text-base font-semibold text-white transition-all duration-200 bg-teal-700 border border-transparent rounded-md items-center hover:bg-teal-600 focus:bg-blue-900"
-                onClick={() => setMobileMenuOpen(false)} // close menu on click
-              >
-                Get started now
-              </a>
             </div>
           </nav>
         )}

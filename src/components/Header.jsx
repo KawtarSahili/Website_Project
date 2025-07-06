@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FiPhone, FiMail } from "react-icons/fi";
-
-
-
-// Then use <TopBar /> in your Header component
+import { Link } from "react-router-dom"; // Importez Link depuis react-router-dom
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -28,7 +25,12 @@ export default function Header() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const navItems = ["Features", "Solutions", "About Us", "Contact"];
+  const navItems = [
+    { name: "Features", path: "#features" },
+    { name: "Solutions", path: "#solutions" },
+    { name: "About Us", path: "#about" },
+    { name: "Contact", path: "/contact" } // Lien vers la page contact
+  ];
 
   return (
     <header
@@ -40,25 +42,25 @@ export default function Header() {
         <nav className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <a href="#" aria-label="Home" className="flex">
+            <Link to="/" aria-label="Home" className="flex"> {/* Changé de <a> à <Link> */}
               <img
                 className="w-auto h-20 lg:h-30"
                 src="/logo.png"
                 alt="Logo"
               />
-            </a>
+            </Link>
           </div>
 
           {/* Desktop menu - Reduced spacing */}
           <div className="hidden lg:flex lg:items-center lg:gap-3">
             {navItems.map((item) => (
-              <a
-                key={item}
-                href="#"
+              <Link
+                key={item.name}
+                to={item.path}
                 className="text-lg font-medium text-white transition-all duration-200 hover:text-teal-200 focus:text-teal-300 px-2 py-1"
               >
-                {item}
-              </a>
+                {item.name}
+              </Link>
             ))}
             
             {/* Search bar with reduced left margin */}
@@ -129,14 +131,14 @@ export default function Header() {
             <div className="flow-root">
               <div className="flex flex-col px-4 -my-1 space-y-0.5">
                 {navItems.map((item) => (
-                  <a
-                    key={item}
-                    href="#"
+                  <Link
+                    key={item.name}
+                    to={item.path}
                     className="inline-flex py-1.5 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600 px-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {item}
-                  </a>
+                    {item.name}
+                  </Link>
                 ))}
               </div>
             </div>

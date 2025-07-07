@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom"; // 👈 Import Link from react-router-dom
 import Header from "./Header";
-import Footer from "./Footer"; // Import the Footer component
+import Footer from "./Footer";
 
 export default function LandingPage() {
   return (
@@ -27,9 +28,19 @@ export default function LandingPage() {
           <p className="mt-4 text-lg sm:text-xl md:text-2xl max-w-3xl">
             At the core of this digital transformation: the network, our legacy and expertise, powering seamless communication across the globe.
           </p>
-          <button className="mt-8 px-6 py-3 text-lg font-semibold text-white bg-teal-600 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
-            Get Started Now
-          </button>
+          
+          <div className="mt-8 flex gap-4"> {/* 👈 Wrap buttons in a flex container */}
+            <button className="px-6 py-3 text-lg font-semibold text-white bg-teal-600 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50">
+              Get Started Now
+            </button>
+            
+            {/* 👇 New Login/Signup button */}
+            <Link 
+              to="/auth" 
+              className="px-6 py-3 text-lg font-semibold text-white bg-teal-600 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50"            >
+              Login / Sign Up
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -47,7 +58,6 @@ export default function LandingPage() {
         ))}
       </main>
 
-      {/* Add the Footer here */}
       <Footer />
     </>
   );

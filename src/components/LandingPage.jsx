@@ -13,7 +13,7 @@ export default function LandingPage() {
         {/* Background video */}
         <video
           className="absolute top-0 left-0 w-full h-full object-cover bg-black"
-          src="vi.mp4"
+          src="vid.mp4"
           autoPlay
           loop
           muted

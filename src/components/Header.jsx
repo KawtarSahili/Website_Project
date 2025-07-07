@@ -1,152 +1,230 @@
-import React, { useState, useEffect } from "react";
-import { FiPhone, FiMail } from "react-icons/fi";
-import { Link } from "react-router-dom"; // Importez Link depuis react-router-dom
+import { useState, useEffect } from "react";
+import {
+  ChevronDown,
+  Search,
+  ShoppingBag,
+  User,
+  Menu,
+  X,
+} from "lucide-react";
 
-export default function Header() {
+const Header = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hoveredMenu, setHoveredMenu] = useState(null);
+  const [closingTimeout, setClosingTimeout] = useState(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
-
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1024) {
+      if (window.innerWidth >= 768) {
         setMobileMenuOpen(false);
       }
     };
+
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleMenuEnter = (index) => {
+    if (closingTimeout) {
+      clearTimeout(closingTimeout);
+      setClosingTimeout(null);
+    }
+    setHoveredMenu(index);
+  };
+
+  const handleMenuLeave = () => {
+    const timeout = setTimeout(() => {
+      setHoveredMenu(null);
+    }, 300); // 300ms delay before closing
+    setClosingTimeout(timeout);
+  };
+
   const navItems = [
-    { name: "Features", path: "#features" },
-    { name: "Solutions", path: "#solutions" },
-    { name: "About Us", path: "#about" },
-    { name: "Contact", path: "/contact" } // Lien vers la page contact
+    {
+      label: "Mobile",
+      submenu: ["Forfaits", "Appareils", "Recharger"],
+    },
+    {
+      label: "Internet",
+      submenu: ["Fibre", "ADSL", "Routeurs"],
+    },
+    {
+      label: "Offres",
+      submenu: ["Nouveaux clients", "Étudiants", "Packs combinés"],
+    },
+    {
+      label: "Support",
+      submenu: ["FAQ", "Suivi commande", "Assistance technique"],
+    },
   ];
 
   return (
+    <>
+      {/* Header */}
       <header
-        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
+        className={`fixed top-4 left-1/2 -translate-x-1/2 w-[95%] z-50 px-6 py-3 rounded-full border border-white/10 transition-all duration-300 ${
           scrolled
-            ? "bg-teal-700/80 backdrop-blur-md shadow-md"
-            : "lg:bg-transparent bg-teal-700"
+            ? "bg-teal-700/70 backdrop-blur shadow-lg"
+            : "bg-teal-700/70 backdrop-blur-sm"
         }`}
       >
-      <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
-        <nav className="flex items-center justify-between h-16 lg:h-20">
+        <div className="flex items-center justify-between max-w-7xl mx-auto gap-6">
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <Link to="/" aria-label="Home" className="flex">
-              <img
-                className="w-auto h-20 lg:h-30"
-                src="/logo.png"
-                alt="Logo"
-              />
-            </Link>
-          </div>
+          <div className="text-white font-bold text-xl">TelCom</div>
 
-          {/* Desktop menu - Reduced spacing */}
-          <div className="hidden lg:flex lg:items-center lg:gap-3">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className="text-lg font-medium text-white transition-all duration-200 hover:text-teal-200 focus:text-teal-300 px-2 py-1"
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex gap-6 text-white text-sm font-medium">
+            {navItems.map((item, index) => (
+              <div 
+                key={index} 
+                className="relative group"
+                onMouseEnter={() => handleMenuEnter(index)}
+                onMouseLeave={handleMenuLeave}
               >
-                {item.name}
-              </Link>
+                <button className="flex items-center gap-1 hover:text-teal-300 transition">
+                  {item.label}
+                  <ChevronDown size={14} className="mt-[2px]" />
+                </button>
+                <div 
+                  className={`absolute top-full left-0 mt-2 flex flex-col bg-teal-900 text-white text-sm rounded-md shadow-lg py-2 min-w-[160px] z-10 transition-opacity duration-300 ${
+                    hoveredMenu === index ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}
+                  onMouseEnter={() => handleMenuEnter(index)}
+                  onMouseLeave={handleMenuLeave}
+                >
+                  {item.submenu.map((subItem, subIndex) => (
+                    <a
+                      key={subIndex}
+                      href="#"
+                      className="px-4 py-2 hover:bg-teal-700 transition"
+                    >
+                      {subItem}
+                    </a>
+                  ))}
+                </div>
+              </div>
             ))}
-            
-            {/* Search bar with reduced left margin */}
-            <form className="ml-2" role="search" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="search"
-                placeholder="Search..."
-                className="w-72 px-4 py-1.5 rounded-full border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 text-sm"
-              />
-            </form>
+          </nav>
+
+          {/* Search bar (desktop) */}
+          <div className="hidden lg:flex items-center bg-white/10 border border-white/20 rounded-full px-3 py-1">
+            <Search size={16} className="text-white/80" />
+            <input
+              type="text"
+              placeholder="Search On TelCom..."
+              className="bg-transparent outline-none text-sm text-white placeholder-white/70 px-2 py-1 w-40"
+            />
           </div>
 
-          {/* Mobile menu button */}
-          <button
-            type="button"
-            className="inline-flex p-2 text-black rounded-md lg:hidden transition-all duration-200"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-expanded={mobileMenuOpen}
-            aria-label="Toggle menu"
-          >
-            {/* Hamburger icon */}
-            <svg
-              className={`${mobileMenuOpen ? "hidden" : "block"} w-6 h-6 text-white`}
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden={!mobileMenuOpen}
+          {/* Right side */}
+          <div className="flex items-center gap-4 text-white relative">
+            {/* Bag icon (desktop only) */}
+            <a
+              href="/panier"
+              className="hidden md:inline hover:text-teal-300 transition"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 8h16M4 16h16"
-              />
-            </svg>
+              <ShoppingBag size={20} />
+            </a>
 
-            {/* Close icon */}
-            <svg
-              className={`${mobileMenuOpen ? "block" : "hidden"} w-6 h-6 text-white`}
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              aria-hidden={mobileMenuOpen}
+            {/* Login */}
+            <a
+              href="/login"
+              className="flex items-center gap-2 bg-white text-teal-900 px-3 py-1.5 rounded-full text-sm font-semibold hover:bg-teal-200 transition"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
+              <User size={16} /> Login
+            </a>
+
+            {/* Burger menu always at the end */}
+            <button
+              onClick={() => setMobileMenuOpen(true)}
+              className="md:hidden"
+            >
+              <Menu size={24} />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Drawer */}
+      <div
+        className={`fixed top-0 right-0 h-full w-64 bg-teal-900 text-white z-50 transform transition-transform duration-300 ${
+          mobileMenuOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+      >
+        <div className="flex justify-between items-center px-4 py-4 border-b border-white/10">
+          <span className="font-bold text-lg">Menu</span>
+          <button onClick={() => setMobileMenuOpen(false)}>
+            <X size={24} />
           </button>
-        </nav>
+        </div>
 
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <nav className="pt-4 pb-6 bg-teal-700/80 backdrop-blur-md mb-4 rounded-md  lg:hidden">
-            {/* Search bar (mobile) */}
-            <form className="px-4 mb-3" role="search" onSubmit={(e) => e.preventDefault()}>
-              <input
-                type="search"
-                placeholder="Search..."
-                className="w-full px-3 py-1.5 rounded-full border border-teal-300 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 text-sm"
-              />
-            </form>
-            <div className="flow-root">
-              <div className="flex flex-col px-4 -my-1 space-y-0.5">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className="inline-flex py-1.5 text-base font-medium text-white transition-all duration-200 hover:text-teal-200 focus:text-teal-300 px-2"
-                    onClick={() => setMobileMenuOpen(false)}
+        {/* Search */}
+        <div className="p-4 border-b border-white/10">
+          <div className="flex items-center bg-white/10 border border-white/20 rounded-full px-3 py-2">
+            <Search size={16} className="text-white/80" />
+            <input
+              type="text"
+              placeholder="Rechercher..."
+              className="bg-transparent outline-none text-sm text-white placeholder-white/70 px-2 py-1 w-full"
+            />
+          </div>
+        </div>
+
+        {/* Mobile Nav */}
+        <div className="p-4 space-y-4">
+          {navItems.map((item, index) => (
+            <div key={index}>
+              <p className="text-sm font-semibold mb-2">{item.label}</p>
+              <div className="space-y-1 pl-2">
+                {item.submenu.map((subItem, subIndex) => (
+                  <a
+                    key={subIndex}
+                    href="#"
+                    className="block text-sm hover:text-teal-300"
                   >
-                    {item.name}
-                  </Link>
+                    {subItem}
+                  </a>
                 ))}
               </div>
             </div>
-          </nav>
-        )}
+          ))}
+        </div>
+
+        {/* Panier */}
+        <div className="px-4 mt-4">
+          <a
+            href="/panier"
+            className="flex items-center gap-2 text-white hover:text-teal-300"
+          >
+            <ShoppingBag size={20} /> Mon Panier
+          </a>
+        </div>
+
+        {/* Langue */}
+        <div className="px-4 mt-6">
+          <p className="text-sm font-semibold mb-2">Langue</p>
+          <div className="space-y-1 pl-2">
+            {["FR", "EN"].map((lang) => (
+              <button
+                key={lang}
+                onClick={() => console.log(`Lang switched to ${lang}`)}
+                className="block text-sm hover:text-teal-300"
+              >
+                {lang}
+              </button>
+            ))}
+          </div>
+        </div>
       </div>
-    </header>
+    </>
   );
-}
+};
+
+export default Header;

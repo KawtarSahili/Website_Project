@@ -12,8 +12,8 @@ export default function LandingPage() {
       <section className="relative w-full h-screen overflow-hidden pt-16">
         {/* Background video */}
         <video
-          className="absolute top-0 left-0 w-full h-full object-cover"
-          src="vid.mp4"
+          className="absolute top-0 left-0 w-full h-full object-cover bg-black"
+          src="vi.mp4"
           autoPlay
           loop
           muted

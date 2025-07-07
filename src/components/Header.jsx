@@ -33,16 +33,18 @@ export default function Header() {
   ];
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
-        scrolled ? "bg-teal-700/80 backdrop-blur-md shadow-md" : "bg-transparent"
-      }`}
-    >
+      <header
+        className={`fixed top-0 left-0 w-full z-50 transition-colors duration-300 ${
+          scrolled
+            ? "bg-teal-700/80 backdrop-blur-md shadow-md"
+            : "lg:bg-transparent bg-teal-700"
+        }`}
+      >
       <div className="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <nav className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" aria-label="Home" className="flex"> {/* Changé de <a> à <Link> */}
+            <Link to="/" aria-label="Home" className="flex">
               <img
                 className="w-auto h-20 lg:h-30"
                 src="/logo.png"
@@ -119,13 +121,13 @@ export default function Header() {
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <nav className="pt-4 pb-6 bg-white border border-gray-200 rounded-md shadow-md lg:hidden">
+          <nav className="pt-4 pb-6 bg-teal-700/80 backdrop-blur-md mb-4 rounded-md  lg:hidden">
             {/* Search bar (mobile) */}
             <form className="px-4 mb-3" role="search" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="search"
                 placeholder="Search..."
-                className="w-full px-3 py-1.5 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-teal-400 text-sm"
+                className="w-full px-3 py-1.5 rounded-full border border-teal-300 bg-white focus:outline-none focus:ring-2 focus:ring-teal-400 text-sm"
               />
             </form>
             <div className="flow-root">
@@ -134,7 +136,7 @@ export default function Header() {
                   <Link
                     key={item.name}
                     to={item.path}
-                    className="inline-flex py-1.5 text-base font-medium text-black transition-all duration-200 hover:text-blue-600 focus:text-blue-600 px-2"
+                    className="inline-flex py-1.5 text-base font-medium text-white transition-all duration-200 hover:text-teal-200 focus:text-teal-300 px-2"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}

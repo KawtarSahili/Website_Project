@@ -43,9 +43,10 @@ const Header = ({ onLoginClick }) => {
     {
       label: "Mobile",
       submenu: [
-        { name: "Forfaits", path: "/mobile-plans" }, // Updated this line
+        { name: "Forfaits", path: "/mobile-plans" },
         { name: "Appareils", path: "/devices" },
-        { name: "Recharger", path: "/top-up" }],
+        { name: "Recharger", path: "/top-up" }
+      ],
     },
     {
       label: "Internet",
@@ -57,11 +58,19 @@ const Header = ({ onLoginClick }) => {
     },
     {
       label: "Offres",
-      submenu: ["Nouveaux clients", "Étudiants", "Packs combinés"],
+      submenu: [
+        { name: "Nouveaux clients", path: "/new-customers" },
+        { name: "Étudiants", path: "/students" },
+        { name: "Packs combinés", path: "/bundles" }
+      ],
     },
     {
       label: "Support",
-      submenu: ["FAQ", "Suivi commande", "Assistance technique"],
+      submenu: [
+        { name: "FAQ", path: "/faq" },
+        { name: "Suivi commande", path: "/order-tracking" },
+        { name: "Contact", path: "/contact" }
+      ],
     },
   ];
 

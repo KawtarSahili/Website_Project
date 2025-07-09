@@ -172,7 +172,7 @@ export default function LandingPage() {
         containerClassName="mb-6"
         textClassName="text-3xl md:text-4xl font-bold text-gray-900"
       >
-        Our Services
+        Our mobile plans
       </ScrollFloat>
       
       <ScrollFloat

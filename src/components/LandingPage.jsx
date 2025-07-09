@@ -1,169 +1,334 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
-import { Globe, Clock, Shield } from "react-feather";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-
-const services = [
-  {
-    title: "49Dhs/Month",
-    title2: "Forfait Réseaux Sociaux",
-    description: "Perfect for social media enthusiasts and content creators",
-    icon: <Globe size={48} className="text-teal-600" />,
-    features: [
-      "Unlimited social media access",
-      "High-speed browsing",
-      "24/7 customer support",
-      "Multi-device connectivity",
-      "Free installation"
-    ]
-  },
-  {
-    title: "99Dhs/Month",
-    title2: "Forfait Professionnel",
-    description: "Ideal for businesses and remote work professionals",
-    icon: <Clock size={48} className="text-teal-600" />,
-    features: [
-      "Business-grade connectivity",
-      "Priority technical support",
-      "Advanced security features",
-      "Cloud backup included",
-      "Dedicated account manager"
-    ]
-  },
-  {
-    title: "199Dhs/Month",
-    title2: "Forfait Premium",
-    description: "Ultimate package for demanding users and enterprises",
-    icon: <Shield size={48} className="text-teal-600" />,
-    features: [
-      "Maximum speed guarantee",
-      "Enterprise security suite",
-      "24/7 premium support",
-      "Custom network solutions",
-      "Free equipment upgrade"
-    ]
-  }
-];
-
-const ServiceCard = ({ service, index }) => {
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0 }}
-      animate={inView ? { opacity: 1 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative bg-white p-8 rounded-lg shadow-md transition-all duration-300 hover:shadow-xl overflow-hidden"
-    >
-      <div className="absolute inset-0 bg-[#e8f5e9] opacity-0 group-hover:opacity-90 transition-opacity duration-500"></div>
-      
-      <div className="relative z-10">
-        <div className="flex justify-center mb-4">
-          {service.icon}
-        </div>
-        <h3 className="text-2xl font-bold text-center text-teal-700 mb-2">{service.title}</h3>
-        <h4 className="text-xl font-semibold text-center mb-3">{service.title2}</h4>
-        <p className="text-gray-600 text-center mb-4">{service.description}</p>
-        <ul className="space-y-2 mb-6">
-          {service.features.map((feature, i) => (
-            <li key={i} className="flex items-start">
-              <svg className="h-5 w-5 text-teal-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-              {feature}
-            </li>
-          ))}
-        </ul>
-        
-        <div className="opacity-0 group-hover:opacity-100 translate-y-6 group-hover:translate-y-0 transition-all duration-500 ease-out">
-          <button className="w-full bg-teal-500 hover:bg-teal-600 text-white font-bold py-3 px-4 rounded-md transition duration-300 shadow-lg hover:shadow-xl">
-            Discover
-          </button>
-        </div>
-      </div>
-    </motion.div>
-  );
-};
+import AuthForm from "./AuthForm";
+import bg1 from "../assets/carousel1.jpg";
+import bg2 from "../assets/carousel2.jpg";
+import bg3 from "../assets/carousel3.jpg";
+import SpotlightCard from "./SpotlightCard";
+import ScrollFloat from "./ScrollFloat";
 
 export default function LandingPage() {
-  const [heroRef, heroInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
-  const [titleRef, titleInView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1
-  });
+  const slides = [
+    {
+      title: "Ultra-Fast 5G Network",
+      description: "Experience blazing fast speeds with our next-generation 5G coverage",
+      ctaText: "Discover Plans",
+      bgImage: bg1
+    },
+    {
+      title: "Unlimited Data Plans",
+      description: "Stream, game and browse without limits with our data packages",
+      ctaText: "View Offers",
+      bgImage: bg2
+    },
+    {
+      title: "Family Bundle Deals",
+      description: "Save up to 30% when you connect your whole family",
+      ctaText: "Join Now",
+      bgImage: bg3
+    }
+  ];
+
+  const services = [
+    {
+      title: "49Dhs/mois",
+      features: [
+        "Up to 5 lines included",
+        "Shared data pool (50GB+)",
+        "20% savings vs individual plans",
+        "Parental controls included",
+        "Free intra-family calls"
+      ]      
+    },
+    {
+      title: "99Dhs/mois",
+      features: [
+        "Up to 5 lines included",
+        "Shared data pool (50GB+)",
+        "20% savings vs individual plans",
+        "Parental controls included",
+        "Free intra-family calls"
+      ]      
+    },
+    {
+      title: "199Dhs/mois",
+      features: [
+        "Up to 5 lines included",
+        "Shared data pool (50GB+)",
+        "20% savings vs individual plans",
+        "Parental controls included",
+        "Free intra-family calls"
+      ]      
+    },
+  ];
+
+  const handleLoginClick = () => {
+    setShowAuthModal(true);
+  };
+
+  const closeModal = () => {
+    setShowAuthModal(false);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [slides.length]);
 
   return (
     <>
-      <Header />
-
-      {/* Hero section */}
-      <section ref={heroRef} className="relative w-full h-screen overflow-hidden pt-16">
-        <video
-          className="absolute top-0 left-0 w-full h-full object-cover"
-          src="vid.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-        />
-
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={heroInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center text-white max-w-4xl mx-auto"
-        >
-          <h1 className="text-4xl font-extrabold sm:text-5xl md:text-6xl">
-            Bienvenue chez XXXXXXX
-          </h1>
-          <p className="mt-4 text-lg sm:text-xl md:text-2xl max-w-3xl">
-            At the core of this digital transformation: the network, our legacy and expertise, powering seamless communication across the globe.
-          </p>
-          
-          <div className="mt-8 flex flex-col sm:flex-row gap-4">
-            <button className="px-6 py-3 text-lg font-semibold text-white bg-teal-600 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 transform hover:scale-105 transition-transform duration-300">
-              Get Started Now
-            </button>
-            <Link 
-              to="/auth" 
-              className="px-6 py-3 text-lg font-semibold text-white bg-teal-600 rounded-md hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-opacity-50 text-center transform hover:scale-105 transition-transform duration-300"
+      <Header onLoginClick={handleLoginClick} />
+      
+      {showAuthModal && (
+        <div className="fixed inset-0 bg-transparent bg-opacity-50 z-[1000] flex justify-center items-center p-4">
+          <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+            <button 
+              onClick={closeModal}
+              className="absolute top-4 right-4 bg-white rounded-full p-2 z-50 shadow-lg hover:bg-gray-200"
             >
-              Login / Sign Up
-            </Link>
+            </button>
+            <AuthForm onClose={closeModal} />
           </div>
-        </motion.div>
-      </section>
+        </div>
+      )}
 
-      {/* Services section */}
-      <section className="py-16 bg-gray-100">
-        <div className="container mx-auto px-4">
-          <motion.h2
-            ref={titleRef}
-            initial={{ opacity: 0 }}
-            animate={titleInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-3xl font-bold text-center mb-8"
-          >
-            Venez découvrir nos forfaits incontournables !
-          </motion.h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <ServiceCard key={index} service={service} index={index} />
+      <section className="relative w-full py-16 ">
+        <div className="mx-auto mt-16 px-4 sm:px-6 lg:px-8">
+          <div className="relative h-110 mx-8 rounded-xl overflow-hidden shadow-xl">
+            {slides.map((slide, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+              >
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${slide.bgImage})` }}
+                ></div>
+                <div className="relative h-full flex items-center justify-start ml-16">
+                  <div className="px-8 py-12 max-w-2xl">
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                      {slide.title}
+                    </h1>
+                    <p className="text-xl text-white mb-8">
+                      {slide.description}
+                    </p>
+                    <button className="px-6 py-3 bg-white text-gray-800 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+                      {slide.ctaText}
+                    </button>
+                  </div>
+                </div>
+              </div>
             ))}
+
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
+              aria-label="Previous slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
+              aria-label="Next slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10">
+              {slides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-white w-6' : 'bg-white bg-opacity-50'}`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>
+
+      
+   {/* Services Section */}
+<section className="py-20 bg-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <ScrollFloat
+        animationDuration={0.8}
+        ease="power3.out"
+        scrollStart="top 85%"
+        scrollEnd="top 60%"
+        containerClassName="mb-6"
+        textClassName="text-3xl md:text-4xl font-bold text-gray-900"
+      >
+        Our Services
+      </ScrollFloat>
+      
+      <ScrollFloat
+        animationDuration={0.6}
+        stagger={0.01}
+        scrollStart="top 80%"
+        scrollEnd="top 50%"
+        as="p"
+        textClassName="text-xl text-gray-600 max-w-3xl mx-auto"
+      >
+        Discover the comprehensive range of services designed to keep you connected
+      </ScrollFloat>
+    </div>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {services.map((service, index) => (
+        <SpotlightCard 
+          key={index}
+          className="custom-spotlight-card hover:-translate-y-1 transition-transform duration-300" 
+          spotlightColor="rgba(0, 168, 107, 0.3)"
+        >
+         <div className="flex flex-col h-full p-6">
+  <div className="mb-4 flex items-center">
+    <ScrollFloat
+      animationDuration={0.5}
+      scrollStart="top 90%"
+      scrollEnd="top 70%"
+      as="h3"
+      textClassName="text-2xl md:text-3xl font-bold text-teal-600"
+      stagger={0.02}
+    >
+      {service.title}
+    </ScrollFloat>
+  </div>
+            
+            <ul className="space-y-3 flex-grow mb-4">
+              {service.features.map((feature, i) => (
+                <li 
+                  key={i} 
+                  className="flex items-start"
+                >
+                  <svg 
+                    className="w-5 h-5 text-emerald-500 mr-2 mt-0.5 flex-shrink-0" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth="2" 
+                      d="M5 13l4 4L19 7" 
+                    />
+                  </svg>
+                  <span className="text-gray-600">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <button 
+              className="mt-auto px-4 py-2 bg-gradient-to-r from-teal-400 to-teal-600 text-white rounded-lg hover:opacity-90 transition-all self-start shadow-md hover:shadow-emerald-100"
+            >
+              Learn more →
+            </button>
+          </div>
+        </SpotlightCard>
+      ))}
+    </div>
+  </div>
+</section>
+
+      {/* Additional Content Section */}
+      <section className="py-20 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+  <div className="text-center mb-16">
+      <ScrollFloat
+        animationDuration={0.8}
+        ease="power3.out"
+        scrollStart="top 85%"
+        scrollEnd="top 60%"
+        containerClassName="mb-6"
+        textClassName="text-3xl md:text-4xl font-bold text-gray-900"
+      >
+        Why Choose Us?
+      </ScrollFloat>
+      
+      <ScrollFloat
+        animationDuration={0.6}
+        stagger={0.01}
+        scrollStart="top 80%"
+        scrollEnd="top 50%"
+        as="p"
+        textClassName="text-xl text-gray-600 max-w-3xl mx-auto"
+      >
+        Discover the benefits of choosing our telecom services
+      </ScrollFloat>
+    </div>
+    
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      {/* Card 1 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">⚡</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">99.9% Uptime</h3>
+          <p className="text-gray-600">
+            Guaranteed network availability
+          </p>
+        </div>
+      </SpotlightCard>
+
+      {/* Card 2 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">💰</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">No Hidden Fees</h3>
+          <p className="text-gray-600">
+            Transparent pricing
+          </p>
+        </div>
+      </SpotlightCard>
+
+      {/* Card 3 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">🛡️</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">24/7 Support</h3>
+          <p className="text-gray-600">
+            Always available help
+          </p>
+        </div>
+      </SpotlightCard>
+
+      {/* Card 4 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">🌐</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">Global Coverage</h3>
+          <p className="text-gray-600">
+            200+ countries
+          </p>
+        </div>
+      </SpotlightCard>
+
+      {/* Card 5 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">🚀</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">5G Ready</h3>
+          <p className="text-gray-600">
+            Future-proof speeds
+          </p>
+        </div>
+      </SpotlightCard>
+    </div>
+  </div>
+</section>
 
       <Footer />
     </>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { ChevronDown, Search, ShoppingBag, User, Menu, X } from "lucide-react";
+import { Link } from 'react-router-dom';
 
 const Header = ({ onLoginClick }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -41,11 +42,18 @@ const Header = ({ onLoginClick }) => {
   const navItems = [
     {
       label: "Mobile",
-      submenu: ["Forfaits", "Appareils", "Recharger"],
+      submenu: [
+        { name: "Forfaits", path: "/mobile-plans" }, // Updated this line
+        { name: "Appareils", path: "/devices" },
+        { name: "Recharger", path: "/top-up" }],
     },
     {
       label: "Internet",
-      submenu: ["Fibre", "ADSL", "Routeurs"],
+      submenu: [
+        { name: "Fibre", path: "/fiber" },
+        { name: "ADSL", path: "/adsl" },
+        { name: "Routeurs", path: "/routers" }
+      ]
     },
     {
       label: "Offres",
@@ -89,13 +97,13 @@ const Header = ({ onLoginClick }) => {
                   onMouseLeave={handleMenuLeave}
                 >
                   {item.submenu.map((subItem, subIndex) => (
-                    <a
+                    <Link
                       key={subIndex}
-                      href="#"
+                      to={subItem.path}
                       className="px-4 py-2 hover:bg-teal-700 transition"
                     >
-                      {subItem}
-                    </a>
+                      {subItem.name}
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -168,13 +176,14 @@ const Header = ({ onLoginClick }) => {
               <p className="text-sm font-semibold mb-2">{item.label}</p>
               <div className="space-y-1 pl-2">
                 {item.submenu.map((subItem, subIndex) => (
-                  <a
+                  <Link
                     key={subIndex}
-                    href="#"
+                    to={subItem.path}
                     className="block text-sm hover:text-teal-300"
+                    onClick={() => setMobileMenuOpen(false)}
                   >
-                    {subItem}
-                  </a>
+                    {subItem.name}
+                  </Link>
                 ))}
               </div>
             </div>

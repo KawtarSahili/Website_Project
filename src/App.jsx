@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import ContactPage from './components/ContactPage';
+import MobilePlansPage from './components/MobilePlansPage';
+
+
 
 function App() {
   return (
@@ -8,7 +11,8 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/contact" element={<ContactPage />} />
-      </Routes>
+        <Route path="/mobile-plans" element={<MobilePlansPage />} />
+        </Routes>
     </Router>
   );
 }

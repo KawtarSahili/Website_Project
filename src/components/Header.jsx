@@ -78,8 +78,8 @@ const Header = ({ onLoginClick }) => {
     <>
       <header
         className={`fixed top-4 left-1/2 -translate-x-1/2 w-[95%] z-50 px-6 py-3 rounded-full border border-white/10 transition-all duration-300 ${
-          scrolled
-            ? "bg-teal-700/70 backdrop-blur shadow-lg"
+          scrolled 
+            ? "bg-teal-700/70 backdrop-blur shadow-lg" 
             : "bg-teal-700/70 backdrop-blur-sm"
         }`}
       >

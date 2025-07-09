@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Header from './Header';
 import Footer from './Footer';
+import HeroSection from './HeroSection.jsx';
 import { Search, ShoppingBag } from 'lucide-react';
 
 const MobilePlansPage = () => {
@@ -63,15 +64,14 @@ const MobilePlansPage = () => {
                          plan.description.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesPrice = priceFilter === 'all' || 
-                        (priceFilter === 'low' && plan.price < 15) ||
-                        (priceFilter === 'medium' && plan.price >= 15 && plan.price < 25) ||
-                        (priceFilter === 'high' && plan.price >= 25);
+                        (priceFilter === 'low' && plan.price < 100) ||
+                        (priceFilter === 'medium' && plan.price >= 100 && plan.price < 200) ||
+                        (priceFilter === 'high' && plan.price >= 200);
     
     return matchesSearch && matchesPrice;
   });
 
   const addToCart = (plan) => {
-    // Here you would typically connect to your cart state/context
     console.log(`Added ${plan.name} to cart`);
     alert(`${plan.name} added to cart!`);
   };
@@ -80,95 +80,109 @@ const MobilePlansPage = () => {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header onLoginClick={() => console.log("Login clicked")} />
       
-      <main className="flex-grow container mx-auto px-4 py-8 mt-20">
-        <h1 className="text-3xl font-bold text-teal-700 mb-8">Mobile Plans</h1>
+      {/* Hero Section */}
+      <HeroSection />
+      
+      <main className="flex-grow container mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold text-teal-700 mb-4">All Mobile Plans</h2>
+          <p className="text-xl text-teal-600 max-w-2xl mx-auto">
+            Compare all our plans and find the perfect match for your needs
+          </p>
+        </div>
         
         {/* Search and Filter Section */}
-        <div className="bg-teal-700/10 p-6 rounded-lg mb-8 backdrop-blur-sm border border-teal-700/20">
+        <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl mb-8 shadow-lg border border-teal-200">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-grow">
               <div className="relative">
                 <input
                   type="text"
                   placeholder="Search plans..."
-                  className="w-full bg-white/90 border border-teal-700/20 rounded-full px-4 py-2 pl-10 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                  className="w-full bg-white border border-teal-300 rounded-full px-4 py-3 pl-12 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
-                <Search className="absolute left-3 top-2.5 text-teal-700/80" size={18} />
+                <Search className="absolute left-4 top-3.5 text-teal-500" size={20} />
               </div>
             </div>
             <select
-              className="bg-white/90 border border-teal-700/20 rounded-full px-4 py-2 focus:outline-none focus:ring-2 focus:ring-teal-500 text-teal-700"
+              className="bg-white border border-teal-300 rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-teal-700 min-w-[200px]"
               value={priceFilter}
               onChange={(e) => setPriceFilter(e.target.value)}
             >
               <option value="all">All Prices</option>
-              <option value="low">Under 50Dhs</option>
-              <option value="medium">50Dhs - 150Dhs</option>
+              <option value="low">Under 100Dhs</option>
+              <option value="medium">100Dhs - 200Dhs</option>
               <option value="high">Over 200Dhs</option>
             </select>
           </div>
         </div>
 
         {/* Plans Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredPlans.map((plan) => (
-            <div key={plan.id} className=" relative bg-white rounded-xl shadow-md overflow-hidden border border-teal-700/20 hover:shadow-lg transition-shadow pb-16">
-              <div className="bg-teal-700/10 p-4 border-b border-teal-700/20">
-                <h2 className="text-xl font-bold text-teal-700">{plan.name}</h2>
+            <div key={plan.id} className="relative bg-white rounded-2xl shadow-lg overflow-hidden border border-teal-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 pb-16">
+              <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-6 border-b border-teal-200">
+                <h3 className="text-xl font-bold text-teal-800 mb-2">{plan.name}</h3>
                 <p className="text-teal-600">{plan.description}</p>
               </div>
               
               <div className="p-6">
-                <div className="flex justify-between items-center mb-4">
-                  <span className="text-3xl font-bold text-teal-700">{plan.price.toFixed(2)}Dhs</span>
-                  <span className="bg-teal-700/10 text-teal-700 px-3 py-1 rounded-full text-sm font-medium">
+                <div className="flex justify-between items-center mb-6">
+                  <div className="text-4xl font-bold text-teal-700">
+                    {plan.price}
+                    <span className="text-lg font-normal text-teal-600">Dhs</span>
+                  </div>
+                  <span className="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm font-medium">
                     {plan.contract}
                   </span>
                 </div>
                 
                 <div className="mb-6">
-                  <div className="grid grid-cols-2 gap-2 mb-4">
-                    <div>
-                      <p className="text-sm text-gray-500">Data</p>
-                      <p className="font-medium">{plan.data}</p>
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="bg-teal-50 p-3 rounded-lg">
+                      <p className="text-sm text-teal-600">Data</p>
+                      <p className="font-semibold text-teal-800">{plan.data}</p>
                     </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Speed</p>
-                      <p className="font-medium">{plan.speed}</p>
+                    <div className="bg-teal-50 p-3 rounded-lg">
+                      <p className="text-sm text-teal-600">Speed</p>
+                      <p className="font-semibold text-teal-800">{plan.speed}</p>
                     </div>
-                    <div>
-                      <p className="text-sm text-gray-500">Calls</p>
-                      <p className="font-medium">{plan.calls}</p>
+                    <div className="bg-teal-50 p-3 rounded-lg">
+                      <p className="text-sm text-teal-600">Calls</p>
+                      <p className="font-semibold text-teal-800">{plan.calls}</p>
                     </div>
-                    <div>
-                      <p className="text-sm text-gray-500">SMS</p>
-                      <p className="font-medium">{plan.sms}</p>
+                    <div className="bg-teal-50 p-3 rounded-lg">
+                      <p className="text-sm text-teal-600">SMS</p>
+                      <p className="font-semibold text-teal-800">{plan.sms}</p>
                     </div>
                   </div>
                   
-                  <ul className="space-y-2 mb-6">
+                  <ul className="space-y-3">
                     {plan.features.map((feature, index) => (
                       <li key={index} className="flex items-start">
-                        <svg className="h-5 w-5 text-teal-500 mr-2 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        <span>{feature}</span>
+                        <div className="bg-teal-600 rounded-full p-1 mr-3 mt-0.5">
+                          <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                          </svg>
+                        </div>
+                        <span className="text-teal-700">{feature}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
-                  <div className="absolute bottom-0 left-0 right-0 p-4 bg-white border-t border-teal-700/20">
-    <button
-      onClick={() => addToCart(plan)}
-      className="w-full bg-teal-700 hover:bg-teal-600 text-white font-medium py-2 px-4 rounded-full transition flex items-center justify-center"
-    >
-      <ShoppingBag className="mr-2" size={18} />
-      Add to Cart
-    </button>
-  </div>
-</div>
+              </div>
+              
+              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white to-transparent">
+                <button
+                  onClick={() => addToCart(plan)}
+                  className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105"
+                >
+                  <ShoppingBag className="mr-2" size={20} />
+                  Add to Cart
+                </button>
+              </div>
             </div>
           ))}
         </div>

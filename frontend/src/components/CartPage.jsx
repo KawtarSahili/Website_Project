@@ -17,17 +17,7 @@ const CartPage = () => {
       image: "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=400",
       features: ["Unlimited Data", "5G Speed", "EU Roaming", "Streaming Services"]
     },
-    {
-      id: 2,
-      name: "iPhone 15 Pro",
-      price: 3999,
-      quantity: 1,
-      category: "Device",
-      storage: "256GB",
-      color: "Natural Titanium",
-      image: "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=400",
-      features: ["256GB Storage", "Pro Camera System", "Titanium Design"]
-    },
+   
     {
       id: 3,
       name: "Standard Plan",

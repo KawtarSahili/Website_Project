@@ -128,13 +128,13 @@ const Header = ({ onLoginClick }) => {
             />
           </div>
 
+ 
           <div className="flex items-center gap-4 text-white relative">
-            <a
-              href="/panier"
+            <Link to="/panier"
               className="hidden md:inline hover:text-teal-300 transition"
             >
               <ShoppingBag size={20} />
-            </a>
+            </Link>
 
             <button
               onClick={(e) => {
@@ -200,13 +200,13 @@ const Header = ({ onLoginClick }) => {
         </div>
 
         <div className="px-4 mt-4">
-          <a
-            href="/panier"
-            className="flex items-center gap-2 text-white hover:text-teal-300"
-          >
-            <ShoppingBag size={20} /> Mon Panier
-          </a>
-        </div>
+  <Link
+    to="/panier"
+    className="flex items-center gap-2 text-white hover:text-teal-300"
+  >
+    <ShoppingBag size={20} /> Mon Panier
+  </Link>
+</div>
 
         <div className="px-4 mt-4">
           <button

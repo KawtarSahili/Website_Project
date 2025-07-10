@@ -1,196 +1,336 @@
-import { useState } from 'react';
-import Header from './Header';
-import Footer from './Footer';
-import HeroSection from './HeroSection';
-import { Search, ShoppingBag } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import Header from "./Header";
+import Footer from "./Footer";
+import AuthForm from "./AuthForm";
+import bg1 from "../assets/carousel1.jpg";
+import bg2 from "../assets/carousel2.jpg";
+import bg3 from "../assets/carousel3.jpg";
+import SpotlightCard from "./SpotlightCard";
+import ScrollFloat from "./ScrollFloat";
 
-const MobilePlansPage = () => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [priceFilter, setPriceFilter] = useState('all');
+export default function LandingPage() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
-  const plans = [
+  const slides = [
     {
-      id: 1,
-      name: "Basic Plan",
-      price: 49,
-      data: "5GB",
-      calls: "Unlimited",
-      sms: "Unlimited",
-      speed: "4G",
-      contract: "No contract",
-      features: ["5GB data", "Unlimited calls", "Unlimited SMS", "4G speed"],
-      description: "Perfect for light users who mainly need calls and texts."
+      title: "Ultra-Fast 5G Network",
+      description: "Experience blazing fast speeds with our next-generation 5G coverage",
+      ctaText: "Discover Plans",
+      bgImage: bg1
     },
     {
-      id: 2,
-      name: "Standard Plan",
-      price: 99,
-      data: "20GB",
-      calls: "Unlimited",
-      sms: "Unlimited",
-      speed: "4G+",
-      contract: "12 months",
-      features: ["20GB data", "Unlimited calls", "Unlimited SMS", "4G+ speed", "EU roaming"],
-      description: "Great balance for regular users with moderate data needs."
+      title: "Unlimited Data Plans",
+      description: "Stream, game and browse without limits with our data packages",
+      ctaText: "View Offers",
+      bgImage: bg2
     },
     {
-      id: 3,
-      name: "Premium Plan",
-      price: 199,
-      data: "Unlimited",
-      calls: "Unlimited",
-      sms: "Unlimited",
-      speed: "5G",
-      contract: "12 months",
-      features: ["Unlimited data", "Unlimited calls", "Unlimited SMS", "5G speed", "EU roaming", "Streaming services"],
-      description: "For heavy users who want the best experience with no limits."
-    },
-    {
-      id: 4,
-      name: "Student Plan",
-      price: 149,
-      data: "15GB",
-      calls: "Unlimited",
-      sms: "Unlimited",
-      speed: "4G",
-      contract: "No contract",
-      features: ["15GB data", "Unlimited calls", "Unlimited SMS", "Student discount", "Flexible"],
-      description: "Special offer for students with great value."
+      title: "Family Bundle Deals",
+      description: "Save up to 30% when you connect your whole family",
+      ctaText: "Join Now",
+      bgImage: bg3
     }
   ];
 
-  const filteredPlans = plans.filter(plan => {
-    const matchesSearch = plan.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         plan.description.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesPrice = priceFilter === 'all' || 
-                        (priceFilter === 'low' && plan.price < 100) ||
-                        (priceFilter === 'medium' && plan.price >= 100 && plan.price < 200) ||
-                        (priceFilter === 'high' && plan.price >= 200);
-    
-    return matchesSearch && matchesPrice;
-  });
+  const services = [
+    {
+      title: "49Dhs/mois",
+      features: [
+        "Up to 5 lines included",
+        "Shared data pool (50GB+)",
+        "20% savings vs individual plans",
+        "Parental controls included",
+        "Free intra-family calls"
+      ]      
+    },
+    {
+      title: "99Dhs/mois",
+      features: [
+        "Up to 5 lines included",
+        "Shared data pool (50GB+)",
+        "20% savings vs individual plans",
+        "Parental controls included",
+        "Free intra-family calls"
+      ]      
+    },
+    {
+      title: "199Dhs/mois",
+      features: [
+        "Up to 5 lines included",
+        "Shared data pool (50GB+)",
+        "20% savings vs individual plans",
+        "Parental controls included",
+        "Free intra-family calls"
+      ]      
+    },
+  ];
 
-  const addToCart = (plan) => {
-    console.log(`Added ${plan.name} to cart`);
-    alert(`${plan.name} added to cart!`);
+  const handleLoginClick = () => {
+    setShowAuthModal(true);
   };
 
+  const closeModal = () => {
+    setShowAuthModal(false);
+  };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [slides.length]);
+
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      <Header onLoginClick={() => console.log("Login clicked")} />
+    <>
+      <Header onLoginClick={handleLoginClick} />
       
-      {/* Hero Section */}
-      <HeroSection />
-      
-      <main className="flex-grow container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-teal-700 mb-4">All Mobile Plans</h2>
-          <p className="text-xl text-teal-600 max-w-2xl mx-auto">
-            Compare all our plans and find the perfect match for your needs
-          </p>
-        </div>
-        
-        {/* Search and Filter Section */}
-        <div className="bg-white/80 backdrop-blur-sm p-6 rounded-2xl mb-8 shadow-lg border border-teal-200">
-          <div className="flex flex-col md:flex-row gap-4">
-            <div className="flex-grow">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search plans..."
-                  className="w-full bg-white border border-teal-300 rounded-full px-4 py-3 pl-12 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                />
-                <Search className="absolute left-4 top-3.5 text-teal-500" size={20} />
-              </div>
-            </div>
-            <select
-              className="bg-white border border-teal-300 rounded-full px-6 py-3 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent text-teal-700 min-w-[200px]"
-              value={priceFilter}
-              onChange={(e) => setPriceFilter(e.target.value)}
+      {showAuthModal && (
+        <div className="fixed inset-0 bg-transparent bg-opacity-50 z-[1000] flex justify-center items-center p-4">
+          <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto">
+            <button 
+              onClick={closeModal}
+              className="absolute top-4 right-4 bg-white rounded-full p-2 z-50 shadow-lg hover:bg-gray-200"
             >
-              <option value="all">All Prices</option>
-              <option value="low">Under 100Dhs</option>
-              <option value="medium">100Dhs - 200Dhs</option>
-              <option value="high">Over 200Dhs</option>
-            </select>
+            </button>
+            <AuthForm onClose={closeModal} />
           </div>
         </div>
+      )}
 
-        {/* Plans Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredPlans.map((plan) => (
-            <div key={plan.id} className="relative bg-white rounded-2xl shadow-lg overflow-hidden border border-teal-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 pb-16">
-              <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-6 border-b border-teal-200">
-                <h3 className="text-xl font-bold text-teal-800 mb-2">{plan.name}</h3>
-                <p className="text-teal-600">{plan.description}</p>
-              </div>
-              
-              <div className="p-6">
-                <div className="flex justify-between items-center mb-6">
-                  <div className="text-4xl font-bold text-teal-700">
-                    {plan.price}
-                    <span className="text-lg font-normal text-teal-600">Dhs</span>
+      <section className="relative w-full py-16 ">
+        <div className="mx-auto mt-16 px-4 sm:px-6 lg:px-8">
+          <div className="relative h-110 mx-8 rounded-xl overflow-hidden shadow-xl">
+            {slides.map((slide, index) => (
+              <div
+                key={index}
+                className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+              >
+                <div
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${slide.bgImage})` }}
+                ></div>
+                <div className="relative h-full flex items-center justify-start ml-16">
+                  <div className="px-8 py-12 max-w-2xl">
+                    <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                      {slide.title}
+                    </h1>
+                    <p className="text-xl text-white mb-8">
+                      {slide.description}
+                    </p>
+                    <button className="px-6 py-3 bg-white text-gray-800 font-semibold rounded-lg hover:bg-gray-100 transition-colors">
+                      {slide.ctaText}
+                    </button>
                   </div>
-                  <span className="bg-teal-100 text-teal-700 px-3 py-1 rounded-full text-sm font-medium">
-                    {plan.contract}
-                  </span>
-                </div>
-                
-                <div className="mb-6">
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    <div className="bg-teal-50 p-3 rounded-lg">
-                      <p className="text-sm text-teal-600">Data</p>
-                      <p className="font-semibold text-teal-800">{plan.data}</p>
-                    </div>
-                    <div className="bg-teal-50 p-3 rounded-lg">
-                      <p className="text-sm text-teal-600">Speed</p>
-                      <p className="font-semibold text-teal-800">{plan.speed}</p>
-                    </div>
-                    <div className="bg-teal-50 p-3 rounded-lg">
-                      <p className="text-sm text-teal-600">Calls</p>
-                      <p className="font-semibold text-teal-800">{plan.calls}</p>
-                    </div>
-                    <div className="bg-teal-50 p-3 rounded-lg">
-                      <p className="text-sm text-teal-600">SMS</p>
-                      <p className="font-semibold text-teal-800">{plan.sms}</p>
-                    </div>
-                  </div>
-                  
-                  <ul className="space-y-3">
-                    {plan.features.map((feature, index) => (
-                      <li key={index} className="flex items-start">
-                        <div className="bg-teal-600 rounded-full p-1 mr-3 mt-0.5">
-                          <svg className="h-3 w-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
-                        </div>
-                        <span className="text-teal-700">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </div>
-              
-              <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-white to-transparent">
+            ))}
+
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
+              aria-label="Previous slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
+              aria-label="Next slide"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2 z-10">
+              {slides.map((_, index) => (
                 <button
-                  onClick={() => addToCart(plan)}
-                  className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105"
-                >
-                  <ShoppingBag className="mr-2" size={20} />
-                  Add to Cart
-                </button>
-              </div>
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all ${index === currentSlide ? 'bg-white w-6' : 'bg-white bg-opacity-50'}`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
-          ))}
+          </div>
         </div>
-      </main>
+      </section>
+
+      
+   {/* Services Section */}
+<section className="bg-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <ScrollFloat
+        animationDuration={0.8}
+        ease="power3.out"
+        scrollStart="top 85%"
+        scrollEnd="top 60%"
+        containerClassName="mb-6"
+        textClassName="text-3xl md:text-4xl font-bold text-gray-900"
+      >
+        Our mobile plans
+      </ScrollFloat>
+      
+      <ScrollFloat
+        animationDuration={0.6}
+        stagger={0.01}
+        scrollStart="top 80%"
+        scrollEnd="top 50%"
+        as="p"
+        textClassName="text-xl text-gray-600 max-w-3xl mx-auto"
+      >
+        Discover the comprehensive range of services designed to keep you connected
+      </ScrollFloat>
+    </div>
+    
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {services.map((service, index) => (
+        <SpotlightCard 
+          key={index}
+          className="custom-spotlight-card hover:-translate-y-1 transition-transform duration-300" 
+          spotlightColor="rgba(0, 168, 107, 0.3)"
+        >
+         <div className="flex flex-col h-full p-6">
+  <div className="mb-4 flex items-center">
+    <ScrollFloat
+      animationDuration={0.5}
+      scrollStart="top 90%"
+      scrollEnd="top 70%"
+      as="h3"
+      textClassName="text-2xl md:text-3xl font-bold text-teal-600"
+      stagger={0.02}
+    >
+      {service.title}
+    </ScrollFloat>
+  </div>
+            
+            <ul className="space-y-3 flex-grow mb-4">
+              {service.features.map((feature, i) => (
+                <li 
+                  key={i} 
+                  className="flex items-start"
+                >
+                  <svg 
+                    className="w-5 h-5 text-emerald-500 mr-2 mt-0.5 flex-shrink-0" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth="2" 
+                      d="M5 13l4 4L19 7" 
+                    />
+                  </svg>
+                  <span className="text-gray-600">{feature}</span>
+                </li>
+              ))}
+            </ul>
+
+            <button 
+              className="mt-auto px-4 py-2 bg-gradient-to-r from-teal-400 to-teal-600 text-white rounded-lg hover:opacity-90 transition-all self-start shadow-md hover:shadow-emerald-100"
+            >
+              Learn more →
+            </button>
+          </div>
+        </SpotlightCard>
+      ))}
+    </div>
+  </div>
+</section>
+
+      {/* Additional Content Section */}
+      <section className="py-20 bg-gray-50">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+  <div className="text-center mb-16">
+      <ScrollFloat
+        animationDuration={0.8}
+        ease="power3.out"
+        scrollStart="top 85%"
+        scrollEnd="top 60%"
+        containerClassName="mb-6"
+        textClassName="text-3xl md:text-4xl font-bold text-gray-900"
+      >
+        Why Choose Us?
+      </ScrollFloat>
+      
+      <ScrollFloat
+        animationDuration={0.6}
+        stagger={0.01}
+        scrollStart="top 80%"
+        scrollEnd="top 50%"
+        as="p"
+        textClassName="text-xl text-gray-600 max-w-3xl mx-auto"
+      >
+        Discover the benefits of choosing our telecom services
+      </ScrollFloat>
+    </div>
+    
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+      {/* Card 1 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">⚡</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">99.9% Uptime</h3>
+          <p className="text-gray-600">
+            Guaranteed network availability
+          </p>
+        </div>
+      </SpotlightCard>
+
+      {/* Card 2 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">💰</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">No Hidden Fees</h3>
+          <p className="text-gray-600">
+            Transparent pricing
+          </p>
+        </div>
+      </SpotlightCard>
+
+      {/* Card 3 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">🛡️</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">24/7 Support</h3>
+          <p className="text-gray-600">
+            Always available help
+          </p>
+        </div>
+      </SpotlightCard>
+
+      {/* Card 4 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">🌐</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">Global Coverage</h3>
+          <p className="text-gray-600">
+            200+ countries
+          </p>
+        </div>
+      </SpotlightCard>
+
+      {/* Card 5 */}
+      <SpotlightCard className="h-full" spotlightColor="rgba(0, 168, 107, 0.2)">
+        <div className="p-6 h-full flex flex-col">
+          <div className="text-4xl mb-3">🚀</div>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">5G Ready</h3>
+          <p className="text-gray-600">
+            Future-proof speeds
+          </p>
+        </div>
+      </SpotlightCard>
+    </div>
+  </div>
+</section>
 
       <Footer />
-    </div>
+    </>
   );
-};
-
-export default MobilePlansPage;
+}

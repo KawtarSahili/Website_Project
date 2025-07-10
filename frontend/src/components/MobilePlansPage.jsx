@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './Header.jsx';
+import Footer from './Footer.jsx';
 import HeroSection from './HeroSection.jsx';
 import { Search, ShoppingBag } from 'lucide-react';
 

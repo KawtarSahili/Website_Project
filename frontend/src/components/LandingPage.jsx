@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import AuthForm from "./AuthForm";
-import bg1 from "../assets/carousel1.jpg";
-import bg2 from "../assets/carousel2.jpg";
-import bg3 from "../assets/carousel3.jpg";
+import bg1 from "../assets/bg1.png";
+import bg2 from "../assets/bg2.png";
+import bg3 from "../assets/bg3.png";
+import graybg from "../assets/gray-bg.jpg";
+import graybg2 from "../assets/gray-bg2.jpg";
+
 import SpotlightCard from "./SpotlightCard";
 import ScrollFloat from "./ScrollFloat";
 
@@ -98,7 +101,7 @@ export default function LandingPage() {
         </div>
       )}
 
-      <section className="relative w-full py-16 ">
+      <section className="relative w-full pb-14 pt-16" >
         <div className="mx-auto mt-16 px-4 sm:px-6 lg:px-8">
           <div className="relative h-110 mx-8 rounded-xl overflow-hidden shadow-xl">
             {slides.map((slide, index) => (
@@ -128,7 +131,7 @@ export default function LandingPage() {
 
             <button
               onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 bg-opacity-30 text-teal-800 p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
               aria-label="Previous slide"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -137,7 +140,7 @@ export default function LandingPage() {
             </button>
             <button
               onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black bg-opacity-30 text-white p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 bg-opacity-30 text-teal-800 p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
               aria-label="Next slide"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -161,19 +164,17 @@ export default function LandingPage() {
 
       
    {/* Services Section */}
-<section className="bg-white">
+<section  className="bg-white relative py-10"
+    style={{
+      backgroundImage: `url(${graybg})`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    }} >
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div className="text-center mb-16">
-      <ScrollFloat
-        animationDuration={0.8}
-        ease="power3.out"
-        scrollStart="top 85%"
-        scrollEnd="top 60%"
-        containerClassName="mb-6"
-        textClassName="text-3xl md:text-4xl font-bold text-gray-900"
-      >
-        Our mobile plans
-      </ScrollFloat>
+
+       <h1 className="text-2xl lg:text-3xl text-teal-700 font-bold mb-4 ">Our mobile plans</h1> 
       
       <ScrollFloat
         animationDuration={0.6}
@@ -246,6 +247,7 @@ export default function LandingPage() {
 
       {/* Additional Content Section */}
       <section className="py-20 bg-gray-50">
+        
   <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
   <div className="text-center mb-16">
       <ScrollFloat

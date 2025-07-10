@@ -17,7 +17,6 @@ const CartPage = () => {
       image: "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg?auto=compress&cs=tinysrgb&w=400",
       features: ["Unlimited Data", "5G Speed", "EU Roaming", "Streaming Services"]
     },
-   
     {
       id: 3,
       name: "Standard Plan",
@@ -307,10 +306,13 @@ const CartPage = () => {
                 )}
 
                 {/* Checkout Button */}
-                <button className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-bold py-4 px-6 rounded-full transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105 mb-4">
+                <Link 
+                  to="/payment"
+                  className="w-full bg-gradient-to-r from-teal-600 to-teal-700 hover:from-teal-700 hover:to-teal-800 text-white font-bold py-4 px-6 rounded-full transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl hover:scale-105 mb-4"
+                >
                   <CreditCard className="mr-2" size={20} />
                   Proceed to Checkout
-                </button>
+                </Link>
 
                 <div className="text-center">
                   <p className="text-xs text-teal-600">

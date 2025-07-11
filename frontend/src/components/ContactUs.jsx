@@ -10,16 +10,16 @@ const ContactUs = () => {
     <>
       <Header />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-teal-600 to-teal-700 py-30 w-full text-white text-center">
-        <div className="max-w-4xl mx-auto px-4">
-          <h2 className="text-3xl font-bold mb-3">Contact Us</h2>
-          <p className="text-teal-100">Our TelCom team is available to answer your questions</p>
+      {/* Hero Section with negative margin for card overlap */}
+      <section className="bg-gradient-to-b from-teal-600 to-teal-700 py-30 w-full text-white text-center pb-16 md:pb-20">
+        <div className="max-w-4xl mx-auto px-4 pb-10">
+          <h2 className="lg:text-4xl text-3xl font-bold mb-3">Contact Us</h2>
+          <p className="text-teal-100 lg:text-2xl">Our TelCom team is available to answer your questions</p>
         </div>
       </section>
 
-      {/* Contact Methods Grid */}
-      <section className="bg-stone-50 py-10">
+      {/* Contact Methods Grid with negative margin to overlap hero */}
+      <section className="relative z-10 -mt-16 md:-mt-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {/* Call */}
@@ -90,8 +90,8 @@ const ContactUs = () => {
       <section className="py-12 bg-gradient-to-b from-stone-50 to-white">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-teal-700 mb-2">TelCom Contact Form</h2>
-            <p className="text-stone-600 max-w-xl mx-auto text-sm">
+            <h2 className="lg:text-3xl text-2xl font-bold text-teal-700 mb-2">TelCom Contact Form</h2>
+            <p className="text-stone-600 max-w-xl mx-auto text-xl">
               Fill out this form and our TelCom team will respond as soon as possible.
             </p>
           </div>
@@ -102,8 +102,8 @@ const ContactUs = () => {
               <img
                 src="/faq-icon.png"
                 alt="Contact TelCom"
-                className="w-full max-w-xl mx-auto rounded-xl shadow-lg object-cover"
-                style={{ minHeight: "400px" }}
+                className="w-full max-w-xl mx-auto rounded-xl  object-cover"
+                style={{ minHeight: "500px" }}
               />
             </div>
 

@@ -1,54 +1,45 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import lombok.*;
+
+import java.sql.Timestamp;
+
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long user_id;
 
-    private String fullName;
-
-    @Column(unique = true)
+    private String username;
     private String email;
+    private String password_hash;
+    private String phone;
 
-    @Column(unique = true)
-    private String phoneNumber;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Status status = Status.active;
 
-    private String simNumber;
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Role role = Role.customer;
 
-    private String password;
+    private Timestamp registration_date;
+    private Timestamp last_login;
 
-    private String role = "USER";
-
-    private LocalDateTime createdAt = LocalDateTime.now();
+    public enum Status { active, inactive, suspended; }
+    public enum Role { admin, customer, support; }
 
     // Getters and setters...
-
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
-
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-
-    public String getSimNumber() { return simNumber; }
-    public void setSimNumber(String simNumber) { this.simNumber = simNumber; }
-
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
-
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 }
+
+
+
+

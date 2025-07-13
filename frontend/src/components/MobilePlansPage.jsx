@@ -83,8 +83,8 @@ const MobilePlansPage = () => {
       {/* Hero Section */}
       <HeroSection />
       
-      <main className="flex-grow container mx-auto px-4 py-16">
-        <div className="text-center mb-12">
+      <main className="flex-grow container mx-auto px-30 py-16 ">
+        <div className="text-center mb-12 ">
           <h2 className="text-4xl font-bold text-teal-700 mb-4">All Mobile Plans</h2>
           <p className="text-xl text-teal-600 max-w-2xl mx-auto">
             Compare all our plans and find the perfect match for your needs
@@ -167,7 +167,7 @@ const MobilePlansPage = () => {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                           </svg>
                         </div>
-                        <span className="text-teal-700">{feature}</span>
+                        <span className="text-stone-600">{feature}</span>
                       </li>
                     ))}
                   </ul>

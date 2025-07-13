@@ -6,7 +6,6 @@ import bg1 from "../assets/bg1.png";
 import bg2 from "../assets/bg2.png";
 import bg3 from "../assets/bg3.png";
 import graybg from "../assets/gray-bg.jpg";
-import graybg2 from "../assets/gray-bg2.jpg";
 
 import SpotlightCard from "./SpotlightCard";
 import ScrollFloat from "./ScrollFloat";

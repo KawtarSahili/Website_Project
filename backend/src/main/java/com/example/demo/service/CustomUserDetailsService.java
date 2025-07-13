@@ -1,29 +1,28 @@
 package com.example.demo.service;
 
-
 import com.example.demo.model.User;
 import com.example.demo.respository.UserRepository;
-import org.springframework.security.core.userdetails.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
-    private final UserRepository userRepository;
 
-    public CustomUserDetailsService(UserRepository repo) {
-        this.userRepository = repo;
-    }
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmailOrPhoneNumber(username, username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getEmail() != null ? user.getEmail() : user.getPhoneNumber())
-                .password(user.getPassword())
-                .roles(user.getRole())
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getUsername())
+                .password(user.getPassword_hash())
+                .roles(user.getRole().name())
                 .build();
     }
 }
-

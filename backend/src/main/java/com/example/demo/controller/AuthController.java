@@ -1,72 +1,64 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.LoginRequest;
-import com.example.demo.dto.RegisterRequest;
 import com.example.demo.model.User;
-import com.example.demo.security.JwtUtils;
-import com.example.demo.service.UserService;
+import com.example.demo.respository.UserRepository;
+import com.example.demo.service.JwtService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Timestamp;
+import java.util.Date;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
+@RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-    private final UserService userService;
-    private final JwtUtils jwtUtils;
-
-    public AuthController(AuthenticationManager authenticationManager,
-                          UserService userService,
-                          JwtUtils jwtUtils) {
-        this.authenticationManager = authenticationManager;
-        this.userService = userService;
-        this.jwtUtils = jwtUtils;
-    }
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
-        if (userService.existsByEmail(registerRequest.getEmail())) {
-            return ResponseEntity.badRequest().body("Email already in use");
+    public ResponseEntity<?> register(@RequestBody User request) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            return ResponseEntity.badRequest().body("Username already exists");
         }
 
-        if (userService.existsByPhoneNumber(registerRequest.getPhoneNumber())) {
-            return ResponseEntity.badRequest().body("Phone number already in use");
-        }
+        // Encode le mot de passe
+        request.setPassword_hash(passwordEncoder.encode(request.getPassword_hash()));
 
-        User user = userService.save(registerRequest);
+        // Valeurs par défaut
+        request.setStatus(User.Status.active);
+        request.setRole(User.Role.customer);
+        request.setRegistration_date(new Timestamp(System.currentTimeMillis()));
+        request.setLast_login(null);
+
+        userRepository.save(request);
         return ResponseEntity.ok("User registered successfully");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getPhoneOrEmail(), loginRequest.getPassword())
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtUtils.generateJwtToken(loginRequest.getPhoneOrEmail());
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
+        String username = loginRequest.get("username");
+        String password = loginRequest.get("password");
 
-            return ResponseEntity.ok(new JwtResponse(jwt));
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
-    }
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-    // DTO for JWT response
-    public static class JwtResponse {
-        private String token;
-        public JwtResponse(String token) {
-            this.token = token;
+        if (!passwordEncoder.matches(password, user.getPassword_hash())) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid credentials");
         }
-        public String getToken() {
-            return token;
-        }
-        public void setToken(String token) {
-            this.token = token;
-        }
+
+        user.setLast_login(new Timestamp(new Date().getTime()));
+        userRepository.save(user); // mise à jour du dernier login
+
+        String token = jwtService.generateToken(user);
+        return ResponseEntity.ok(Map.of("token", token));
     }
 }

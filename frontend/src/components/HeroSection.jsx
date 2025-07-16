@@ -72,7 +72,7 @@ const HeroSection = () => {
               Mobile Plan
             </span>
           </h1>
-          <p className="text-xl text-teal-600 mb-8 max-w-2xl mx-auto animate-fade-in-delay">
+          <p className="text-xl text-stone-500 mb-8 max-w-2xl mx-auto animate-fade-in-delay">
             Discover blazing-fast speeds, unlimited data, and unbeatable value with our premium mobile plans
           </p>
           
@@ -208,7 +208,7 @@ const HeroSection = () => {
               <Star className="h-6 w-6 text-yellow-500 mr-2" />
               <span className="text-teal-700 font-semibold">Rated #1 Mobile Provider</span>
             </div>
-            <p className="text-teal-600 mb-6">
+            <p className="text-stone-600 mb-6">
               Join over 2 million satisfied customers who trust us for their mobile connectivity needs
             </p>
             <button className="bg-teal-600 hover:bg-teal-700 text-white font-semibold py-3 px-8 rounded-full transition-all hover:scale-105 shadow-lg">

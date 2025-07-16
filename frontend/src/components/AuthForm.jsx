@@ -3,6 +3,7 @@ import { FaFacebookF, FaGoogle, FaLinkedinIn, FaPhone, FaUser } from 'react-icon
 import { FiMail, FiLock, FiKey } from 'react-icons/fi';
 import { BsSimFill } from 'react-icons/bs';
 import { X } from 'lucide-react';
+import axios from 'axios';
 
 const AuthForm = ({ onClose }) => {
   const [isActive, setIsActive] = useState(false);
@@ -30,7 +31,6 @@ const AuthForm = ({ onClose }) => {
     else if (formData.password.length < 6) newErrors.password = 'Password must be at least 6 characters';
     if (formData.password !== formData.confirmPassword) newErrors.confirmPassword = 'Passwords do not match';
     if (!verificationCode) newErrors.verificationCode = 'Verification code is required';
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -39,36 +39,13 @@ const AuthForm = ({ onClose }) => {
     const newErrors = {};
     if (!formData.phoneOrEmail) newErrors.phoneOrEmail = 'Phone or email is required';
     if (!formData.password) newErrors.password = 'Password is required';
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
-  const mockApiLogin = async (credentials) => {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        // Simulate validation
-        if (credentials.password && credentials.password.length < 6) {
-          reject(new Error('Password must be at least 6 characters'));
-          return;
-        }
-        
-        const mockUser = {
-          id: 123,
-          email: credentials.email || credentials.phoneOrEmail,
-          phone: credentials.phoneNumber,
-          name: credentials.fullName,
-          role: 'user'
-        };
-        const mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEyMywicm9sZSI6InVzZXIifQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
-        resolve({ token: mockToken, user: mockUser });
-      }, 1000);
-    });
-  };
-
   const handleSendVerification = () => {
     if (!phoneNumber) {
-      setErrors({...errors, phoneNumber: 'Phone number is required'});
+      setErrors({ ...errors, phoneNumber: 'Phone number is required' });
       return;
     }
     alert(`Verification code sent to ${phoneNumber}`);
@@ -77,42 +54,39 @@ const AuthForm = ({ onClose }) => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (!validateSignUp()) return;
-    
     try {
-      const { token, user } = await mockApiLogin({ 
-        fullName: formData.fullName,
-        email: formData.email, 
-        phoneNumber,
-        password: formData.password
+      const response = await axios.post('/api/auth/register', {
+        username: formData.fullName,
+        email: formData.email,
+        password_hash: formData.password,
+        phone: phoneNumber
       });
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      onClose();
+      alert('Registration successful');
+      setIsActive(false);
     } catch (error) {
-      alert('Registration failed: ' + error.message);
+      alert('Registration failed: ' + error.response?.data || error.message);
     }
   };
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     if (!validateSignIn()) return;
-    
     try {
-      const { token, user } = await mockApiLogin({ 
-        phoneOrEmail: formData.phoneOrEmail,
+      const response = await axios.post('/api/auth/login', {
+        username: formData.phoneOrEmail,
         password: formData.password
       });
+      const { token } = response.data;
       localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
       onClose();
     } catch (error) {
-      alert('Login failed: ' + error.message);
+      alert('Login failed: ' + error.response?.data || error.message);
     }
   };
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }));

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Minus, Plus, Trash2, ShoppingBag, CreditCard, Shield, Truck, ArrowLeft, Gift, Tag } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const CartPage = () => {
   const [cartItems, setCartItems] = useState([

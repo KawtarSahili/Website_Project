@@ -6,10 +6,8 @@ import internet from '../assets/internet.png';
 import dual from '../assets/dual.png';
 import ty from '../assets/tiktok-youtube.png';
 import socials from '../assets/socials.png';
-import popupbg from '../assets/popup-bg.png';
 import roaming from '../assets/roaming.png';
-import graybg2 from '../assets/gray-bg2.jpg';
-import popupbg2 from '../assets/popupbg5.jpg';
+import popupbg2 from '../assets/popupbg2.jpg';
 
 const offers = [
   {
@@ -66,7 +64,7 @@ const CardPopUp = () => {
                 <h2 className="text-2xl lg:text-4xl font-semibold leading-snug mb-2">
                     Quick top-up, no stress.
                 </h2>
-                <p className="text-lg md:text-2xl text-teal-200 font-medium">
+                <p className="text-lg md:text-2xl text-teal-800 font-medium">
                     More data, more laughs, more everything.
                 </p>
         </div>

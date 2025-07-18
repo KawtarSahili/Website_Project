@@ -24,9 +24,13 @@ public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService; // ✅ injecté automatiquement
 
+    @SuppressWarnings("removal")
     @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
+    .cors() // ➕ active CORS ici
+        .and()
+
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
     return http.build();

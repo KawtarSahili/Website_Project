@@ -99,18 +99,10 @@ const AuthForm = ({ onClose }) => {
     if (!validateSignIn()) return;
     
     try {
-      const response = await axios.post(
-        'http://localhost:8080/api/auth/login',
-        {
-          email: formData.phoneOrEmail.includes('@') 
-            ? formData.phoneOrEmail 
-            : null,
-          username: !formData.phoneOrEmail.includes('@') 
-            ? formData.phoneOrEmail 
-            : null,
-          password: formData.password
-        }
-      );
+      const response = await axios.post('http://localhost:8080/api/auth/login', {
+        phoneOrEmail: formData.phoneOrEmail,
+        password: formData.password
+      });      
         
     localStorage.setItem('token', response.data.token);
     onClose();

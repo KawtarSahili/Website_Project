@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import Header from "./Header";
-import Footer from "./Footer";
+import { Link } from 'react-router-dom';
+
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 const TelecomFAQ = () => {
   const [activeIndex, setActiveIndex] = useState(null);
@@ -31,7 +33,7 @@ const TelecomFAQ = () => {
         { question: "Upgrade options", answer: "Flexible plans to upgrade your services as your needs grow." },
         { question: "Payment methods", answer: "Multiple convenient ways to pay your bills." },
         { question: "Data rollover", answer: "Learn how unused data can be carried to the next month." },
-        { question: "Contact support", answer: "Reach our customer service team through various channels." }
+  
       ]
     }
   ];
@@ -154,10 +156,11 @@ const TelecomFAQ = () => {
         <div className="mt-12 p-6 bg-teal-50 rounded-xl text-center">
           <h3 className="text-xl font-medium text-teal-800 mb-3">Still need help?</h3>
           <p className="text-teal-600 mb-4">Our customer support team is available 24/7</p>
-          <button className="px-6 py-3 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition-colors font-medium" 
-          onClick={() => navigate('/contact')}>
-            Contact Support
-          </button>
+           <Link to="/contact" className="text-teal-600 hover:underline">
+      <button className="mt-2 px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-teal-600 transition-colors">
+        Contact Support
+      </button>
+    </Link>
         </div>
       </div>
      

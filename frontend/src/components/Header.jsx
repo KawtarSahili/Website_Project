@@ -43,32 +43,28 @@ const Header = ({ onLoginClick }) => {
     {
       label: "Mobile",
       submenu: [
-        { name: "Forfaits", path: "/mobile-plans" },
-        { name: "Appareils", path: "/devices" },
-        { name: "Recharger", path: "/top-up" }
+        { name: "Plans", path: "/mobile-plans" },
+        { name: "Top Up", path: "/offers" }
       ],
     },
     {
       label: "Internet",
       submenu: [
-        { name: "Fibre", path: "/fiber" },
+        { name: "Fiber", path: "/fiber" },
         { name: "ADSL", path: "/adsl" },
-        { name: "Routeurs", path: "/routers" }
       ]
     },
     {
       label: "Offres",
       submenu: [
-        { name: "Nouveaux clients", path: "/new-customers" },
-        { name: "Étudiants", path: "/students" },
-        { name: "Packs combinés", path: "/bundles" }
+        { name: "New Customers", path: "/new-customers" },
+        { name: "Students", path: "/students" },
       ],
     },
     {
       label: "Support",
       submenu: [
         { name: "FAQ", path: "/faq" },
-        { name: "Suivi commande", path: "/order-tracking" },
         { name: "Contact", path: "/contact" }
       ],
     },
@@ -84,7 +80,9 @@ const Header = ({ onLoginClick }) => {
         }`}
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto gap-6">
-          <div className="text-white font-bold text-xl">TelCom</div>
+          <Link to="/" className="text-white font-bold text-xl hover:text-teal-300 transition">
+          TelCom
+          </Link>
 
           <nav className="hidden md:flex gap-6 text-white text-sm font-medium">
             {navItems.map((item, index) => (

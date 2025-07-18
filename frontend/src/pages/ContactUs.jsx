@@ -2,8 +2,8 @@ import React from 'react';
 import { Phone, Mail, MapPin, Send } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa';
 
-import Header from './Header';
-import Footer from './Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const ContactUs = () => {
   return (

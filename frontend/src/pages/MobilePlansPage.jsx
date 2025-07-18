@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Header from './Header.jsx';
-import Footer from './Footer.jsx';
-import HeroSection from './HeroSection.jsx';
+import Header from '../components/Header.jsx';
+import Footer from '../components/Footer.jsx';
+import HeroSection from '../components/HeroSection.jsx';
 import { Search, ShoppingBag } from 'lucide-react';
 
 const MobilePlansPage = () => {
@@ -80,13 +80,13 @@ const MobilePlansPage = () => {
     <div className="min-h-screen flex flex-col bg-gray-50">
       <Header onLoginClick={() => console.log("Login clicked")} />
       
-      {/* Hero Section */}
+  
       <HeroSection />
       
       <main className="flex-grow container mx-auto px-30 py-16 ">
         <div className="text-center mb-12 ">
           <h2 className="text-4xl font-bold text-teal-700 mb-4">All Mobile Plans</h2>
-          <p className="text-xl text-teal-600 max-w-2xl mx-auto">
+          <p className="text-xl text-stone-600 max-w-2xl mx-auto">
             Compare all our plans and find the perfect match for your needs
           </p>
         </div>

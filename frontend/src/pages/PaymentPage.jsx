@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ArrowLeft, CreditCard, Smartphone, Building, Shield, Lock, CheckCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import Header from './Header';
-import Footer from './Footer';
+import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const PaymentPage = () => {
   const [paymentMethod, setPaymentMethod] = useState('card');

@@ -1,11 +1,12 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
-import MobilePlansPage from './components/MobilePlansPage';
-import TelecomFAQ from './components/TelcomFAQ';
-import ContactUs from './components/ContactUs'; // Assuming you have a ContactUs component
-import CartPage from './components/CartPage'; 
-import PaymentPage from './components/PaymentPage';
-
+import LandingPage from './pages/LandingPage';
+import MobilePlansPage from './pages/MobilePlansPage';
+import TelecomFAQ from './pages/TelcomFAQ';
+import ContactUs from './pages/ContactUs'; // Assuming you have a ContactUs component
+import CartPage from './pages/CartPage'; 
+import PaymentPage from './pages/PaymentPage';
+import TopUp from './pages/TopUp'; // Importing the TopUp component
+import CardPopUp from './pages/CardPopUp'; // Importing the CardPopUp component
 
 function App() {
   return (
@@ -18,6 +19,8 @@ function App() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/panier" element={<CartPage />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/recharge/:offer" element={<TopUp />} />
+        <Route path="/offers" element={<CardPopUp />} />
         </Routes>
     </Router>
   );

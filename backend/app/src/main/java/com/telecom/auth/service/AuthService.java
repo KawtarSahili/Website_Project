@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 
 
 
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -25,9 +26,21 @@ public class AuthService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final SimService simService;
+    private final VerificationCodeService verificationCodeService;
+
 
     @Transactional
     public AuthResponse register(RegisterRequest request) {
+        // verifier le code d'abord
+        boolean codeValid = verificationCodeService.isValid(
+            request.getPhoneNumber(),
+            request.getVerificationCode()
+        );
+        
+        if (!codeValid) {
+            throw new IllegalArgumentException("Code de vérification invalide ou expiré.");
+        }
+    
         // Create user without SIM card first
         var user = User.builder()
             .fullName(request.getFullName())

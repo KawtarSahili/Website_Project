@@ -7,12 +7,16 @@ import com.telecom.auth.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.telecom.auth.service.VerificationCodeService;
+
 
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
+    private final VerificationCodeService codeService;
+
 
     /**
      * Endpoint for user registration.
@@ -34,7 +38,23 @@ public class AuthController {
 
     @PostMapping("/send-verification")
     public ResponseEntity<String> sendVerification(@RequestParam String phoneNumber) {
-        // Implementation for sending verification code
-        return ResponseEntity.ok("Verification code sent");
+        codeService.generateAndSendCode(phoneNumber);
+        return ResponseEntity.ok("Verification code sent to " + phoneNumber);
     }
+    
+    @GetMapping("/verify-code")
+    public ResponseEntity<String> verifyCode(
+        @RequestParam String phone,
+        @RequestParam String code
+    ) {
+    boolean isValid = codeService.isValid(phone, code);
+    if (isValid) {
+        codeService.clear(phone); // Supprimer les anciens codes utilisés
+        return ResponseEntity.ok("✅ Code vérifié avec succès !");
+    } else {
+        return ResponseEntity.status(400).body("❌ Code invalide ou expiré.");
+    }
+    }
+
+
 }

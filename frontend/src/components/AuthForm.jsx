@@ -3,6 +3,7 @@ import { FaFacebookF, FaGoogle, FaLinkedinIn, FaPhone, FaUser } from 'react-icon
 import { FiMail, FiLock, FiKey } from 'react-icons/fi';
 import { BsSimFill } from 'react-icons/bs';
 import { X } from 'lucide-react';
+import axios from 'axios';
 
 const AuthForm = ({ onClose }) => {
   const [isActive, setIsActive] = useState(false);
@@ -98,17 +99,27 @@ const AuthForm = ({ onClose }) => {
     if (!validateSignIn()) return;
     
     try {
-      const { token, user } = await mockApiLogin({ 
-        phoneOrEmail: formData.phoneOrEmail,
-        password: formData.password
-      });
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-      onClose();
-    } catch (error) {
-      alert('Login failed: ' + error.message);
-    }
-  };
+      const response = await axios.post(
+        'http://localhost:8080/api/auth/login',
+        {
+          email: formData.phoneOrEmail.includes('@') 
+            ? formData.phoneOrEmail 
+            : null,
+          username: !formData.phoneOrEmail.includes('@') 
+            ? formData.phoneOrEmail 
+            : null,
+          password: formData.password
+        }
+      );
+        
+    localStorage.setItem('token', response.data.token);
+    onClose();
+  } catch (error) {
+    console.error('Login error:', error);
+    alert(error.response?.data || 'Login failed');
+  }
+};
+
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;

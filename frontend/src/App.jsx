@@ -2,9 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import MobilePlansPage from './components/MobilePlansPage';
 import TelecomFAQ from './components/TelcomFAQ';
-import ContactUs from './components/ContactUs'; // Assuming you have a ContactUs component
+import ContactUs from './components/ContactUs'; 
 import CartPage from './components/CartPage'; 
 import PaymentPage from './components/PaymentPage';
+import UserDashboard from './components/UserDashboard';
+import AdminDashboard from './components/AdminDashboard';
 
 
 function App() {
@@ -18,6 +20,8 @@ function App() {
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/panier" element={<CartPage />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/user-dashboard" element={<UserDashboard />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
         </Routes>
     </Router>
   );

@@ -4,8 +4,11 @@ import { FiMail, FiLock, FiKey } from 'react-icons/fi';
 import { BsSimFill } from 'react-icons/bs';
 import { X } from 'lucide-react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+
 
 const AuthForm = ({ onClose }) => {
+  const navigate = useNavigate();  
   const [isActive, setIsActive] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
   const [simNumber, setSimNumber] = useState('');
@@ -97,20 +100,31 @@ const AuthForm = ({ onClose }) => {
   const handleSignIn = async (e) => {
     e.preventDefault();
     if (!validateSignIn()) return;
-    
+  
     try {
       const response = await axios.post('http://localhost:8080/api/auth/login', {
         phoneOrEmail: formData.phoneOrEmail,
-        password: formData.password
-      });      
-        
-    localStorage.setItem('token', response.data.token);
-    onClose();
-  } catch (error) {
-    console.error('Login error:', error);
-    alert(error.response?.data || 'Login failed');
-  }
-};
+        password: formData.password,
+      });
+  
+      const { token, role } = response.data;
+      localStorage.setItem('token', token);
+  
+      onClose();
+  
+      // Redirect based on role
+      if (role === 'ADMIN') {
+        navigate('/admin-dashboard');
+      } else if (role === 'USER') {
+        navigate('/user-dashboard');
+      } else {
+        navigate('/');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert(error.response?.data || 'Login failed');
+    }
+  };
 
 
   const handleInputChange = (e) => {

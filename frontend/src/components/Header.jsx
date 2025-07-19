@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ChevronDown, Search, ShoppingBag, User, Menu, X } from "lucide-react";
 import { Link } from 'react-router-dom';
 
-const Header = ({ onLoginClick }) => {
+const Header = ({ onLoginClick, hideLogin = false }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState(null);
@@ -111,6 +111,7 @@ const Header = ({ onLoginClick }) => {
                     >
                       {subItem.name}
                     </Link>
+                    
                   ))}
                 </div>
               </div>
@@ -134,20 +135,19 @@ const Header = ({ onLoginClick }) => {
               <ShoppingBag size={20} />
             </Link>
 
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                onLoginClick();
-              }}
-              className="flex items-center gap-2 bg-white text-teal-900 px-3 py-1.5 rounded-full text-sm font-semibold hover:bg-teal-200 transition"
-            >
-              <User size={16} /> Login
-            </button>
+            {!hideLogin && (
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  onLoginClick();
+                }}
+                className="flex items-center gap-2 bg-white text-teal-900 px-3 py-1.5 rounded-full text-sm font-semibold hover:bg-teal-200 transition"
+              >
+                <User size={16} /> Login
+              </button>
+            )}
 
-            <button
-              onClick={() => setMobileMenuOpen(true)}
-              className="md:hidden"
-            >
+            <button onClick={() => setMobileMenuOpen(true)} className="md:hidden">
               <Menu size={24} />
             </button>
           </div>

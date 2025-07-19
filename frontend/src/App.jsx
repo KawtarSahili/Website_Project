@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import LandingPage from './components/LandingPage';
-import MobilePlansPage from './components/MobilePlansPage';
-import TelecomFAQ from './components/TelcomFAQ';
-import ContactUs from './components/ContactUs'; 
-import CartPage from './components/CartPage'; 
-import PaymentPage from './components/PaymentPage';
+import LandingPage from './pages/LandingPage';
+import MobilePlansPage from './pages/MobilePlansPage';
+import TelecomFAQ from './pages/TelcomFAQ';
+import ContactUs from './pages/ContactUs'; 
+import CartPage from './pages/CartPage'; 
+import PaymentPage from './pages/PaymentPage';
 import UserDashboard from './components/UserDashboard';
 import AdminDashboard from './components/AdminDashboard';
-
+import CardPopUp from './pages/CardPopUp';  
+import TopUp from './pages/TopUp';
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/user-dashboard" element={<UserDashboard />} />
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/recharge/:offer" element={<TopUp />} />
+        <Route path="/top-up" element={<CardPopUp />} />
         </Routes>
     </Router>
   );

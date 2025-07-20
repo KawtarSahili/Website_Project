@@ -44,7 +44,7 @@ const Header = ({ onLoginClick, hideLogin = false }) => {
       label: "Mobile",
       submenu: [
         { name: "Plans", path: "/mobile-plans" },
-        { name: "Top Up", path: "/offers" }
+        { name: "Top Up", path: "/top-up" }
       ],
     },
     {

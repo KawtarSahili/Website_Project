@@ -2,42 +2,32 @@ package com.example.demo.service;
 
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.model.User;
-import com.example.demo.respository.UserRepository;
+import com.example.demo.repository.UserRepository;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+
+
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    public boolean existsByEmail(String email) {
-        return userRepository.existsByEmail(email);
-    }
-
-    public boolean existsByPhoneNumber(String phone) {
-        return userRepository.existsByPhoneNumber(phone);
-    }
-
-    public User save(RegisterRequest registerRequest) {
-        User user = new User();
-        user.setFullName(registerRequest.getFullName());
-        user.setEmail(registerRequest.getEmail());
-        user.setPhoneNumber(registerRequest.getPhoneNumber());
-        user.setSimNumber(registerRequest.getSimNumber());
-        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setRole("USER");
+    public User register(RegisterRequest request) {
+        User user = User.builder()
+                .username(request.getUsername())
+                .email(request.getEmail())
+                .phone(request.getPhone())
+                .passwordHash(passwordEncoder.encode(request.getPassword())) // ✅ camelCase
+                .registrationDate(Timestamp.valueOf(LocalDateTime.now()))
+                .status(User.Status.active)
+                .role(User.Role.customer)
+                .build();
         return userRepository.save(user);
-    }
-
-    public Optional<User> findByEmailOrPhone(String emailOrPhone) {
-        return userRepository.findByEmailOrPhoneNumber(emailOrPhone, emailOrPhone);
     }
 }

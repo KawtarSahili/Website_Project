@@ -1,54 +1,115 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
+import lombok.*;
+
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer userId;
 
-    private String fullName;
-
-    @Column(unique = true)
+    private String username;
     private String email;
+    private String passwordHash;
+    private String phone;
+    private Timestamp registrationDate;
 
-    @Column(unique = true)
-    private String phoneNumber;
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
-    private String simNumber;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    private String password;
+    public enum Status {
+        active, inactive, suspended
+    }
 
-    private String role = "USER";
+    public enum Role {
+        admin, customer, support
+    }
+    private Timestamp lastLogin;
+    // Getters, setters...
 
-    private LocalDateTime createdAt = LocalDateTime.now();
 
-    // Getters and setters...
+    public Integer getUserId() {
+        return userId;
+    }
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 
-    public String getFullName() { return fullName; }
-    public void setFullName(String fullName) { this.fullName = fullName; }
+    public String getUsername() {
+        return username;
+    }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+    public String getEmail() {
+        return email;
+    }
 
-    public String getSimNumber() { return simNumber; }
-    public void setSimNumber(String simNumber) { this.simNumber = simNumber; }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
+    public String getPasswordHash() {
+        return passwordHash;
+    }
 
-    public String getRole() { return role; }
-    public void setRole(String role) { this.role = role; }
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
 
-    public LocalDateTime getCreatedAt() { return createdAt; }
-    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Timestamp getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(Timestamp registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public Timestamp getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Timestamp lastLogin) {
+        this.lastLogin = lastLogin;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 }

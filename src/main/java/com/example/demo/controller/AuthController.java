@@ -1,72 +1,56 @@
 package com.example.demo.controller;
 
+import com.example.demo.repository.UserRepository;
+import com.example.demo.service.JwtService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.*;
 import com.example.demo.dto.LoginRequest;
 import com.example.demo.dto.RegisterRequest;
 import com.example.demo.model.User;
-import com.example.demo.security.JwtUtils;
-import com.example.demo.service.UserService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.*;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+
+
+import java.util.Collections;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-
-    private final AuthenticationManager authenticationManager;
-    private final UserService userService;
-    private final JwtUtils jwtUtils;
-
-    public AuthController(AuthenticationManager authenticationManager,
-                          UserService userService,
-                          JwtUtils jwtUtils) {
-        this.authenticationManager = authenticationManager;
-        this.userService = userService;
-        this.jwtUtils = jwtUtils;
-    }
+    @Autowired
+    private AuthenticationManager authManager;
+    @Autowired
+    private JwtService jwtService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder encoder;
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest registerRequest) {
-        if (userService.existsByEmail(registerRequest.getEmail())) {
-            return ResponseEntity.badRequest().body("Email already in use");
+    public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            return ResponseEntity.badRequest().body("Username already taken");
         }
-
-        if (userService.existsByPhoneNumber(registerRequest.getPhoneNumber())) {
-            return ResponseEntity.badRequest().body("Phone number already in use");
-        }
-
-        User user = userService.save(registerRequest);
+        User user = new User();
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPasswordHash(encoder.encode(request.getPassword()));
+        user.setPhone(request.getPhone());
+        user.setStatus(User.Status.active);
+        user.setRole(User.Role.customer);
+        userRepository.save(user);
         return ResponseEntity.ok("User registered successfully");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getPhoneOrEmail(), loginRequest.getPassword())
-            );
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String jwt = jwtUtils.generateJwtToken(loginRequest.getPhoneOrEmail());
-
-            return ResponseEntity.ok(new JwtResponse(jwt));
-        } catch (BadCredentialsException e) {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
-    }
-
-    // DTO for JWT response
-    public static class JwtResponse {
-        private String token;
-        public JwtResponse(String token) {
-            this.token = token;
-        }
-        public String getToken() {
-            return token;
-        }
-        public void setToken(String token) {
-            this.token = token;
-        }
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        Authentication auth = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        String token = jwtService.generateToken(userDetails);
+        return ResponseEntity.ok(Collections.singletonMap("token", token));
     }
 }

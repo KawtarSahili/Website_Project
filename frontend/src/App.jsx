@@ -10,7 +10,9 @@ import AdminDashboard from './components/AdminDashboard';
 import CardPopUp from './pages/CardPopUp';  
 import TopUp from './pages/TopUp';
 import FiberPlansPage from './pages/FiberPlansPage';
+import ADSLPlansPage from './pages/ADSLPlansPage';
 import StudentsOffer from './pages/StudentsOffer';
+import NewCustomersOffer from './pages/NewCustomersOffer';
 function App() {
   return (
     <Router>
@@ -19,6 +21,7 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/mobile-plans" element={<MobilePlansPage />} />
         <Route path="/fiber" element={<FiberPlansPage />} />
+        <Route path="/adsl" element={<ADSLPlansPage />} />
         <Route path="/faq" element={<TelecomFAQ />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/panier" element={<CartPage />} />
@@ -27,6 +30,7 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/recharge/:offer" element={<TopUp />} />
         <Route path="/top-up" element={<CardPopUp />} />
+        <Route path="/new-customers" element={<NewCustomersOffer />} />
         <Route path="/students" element={<StudentsOffer />} />
 
         </Routes>

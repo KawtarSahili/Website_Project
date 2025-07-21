@@ -125,7 +125,7 @@ const MobilePlansPage = () => {
             <div key={plan.id} className="relative bg-white rounded-2xl shadow-lg overflow-hidden border border-teal-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 pb-16">
               <div className="bg-gradient-to-r from-teal-50 to-blue-50 p-6 border-b border-teal-200">
                 <h3 className="text-xl font-bold text-teal-800 mb-2">{plan.name}</h3>
-                <p className="text-teal-600">{plan.description}</p>
+                <p className="text-stone-600">{plan.description}</p>
               </div>
               
               <div className="p-6">

@@ -21,21 +21,21 @@ export default function LandingPage() {
       description: "Experience blazing fast speeds with our next-generation 5G coverage",
       ctaText: "Discover Plans",
       bgImage: bg1,
-      ctaLink: "/mobile-plans" // Different link for first slide
+      ctaLink: "/mobile-plans"
     },
     {
       title: "Unlimited Data Plans",
       description: "Stream, game and browse without limits with our data packages",
       ctaText: "View Offers",
       bgImage: bg2,
-      ctaLink: "/offers" // Different link for second slide
+      ctaLink: "/offers" 
     },
     {
       title: "Family Bundle Deals",
       description: "Save up to 30% when you connect your whole family",
       ctaText: "Join Now",
       bgImage: bg3,
-      ctaLink: "/family-plans" // Different link for third slide
+      ctaLink: "/family-plans" 
     }
   ];
 
@@ -125,7 +125,7 @@ export default function LandingPage() {
         {slides[currentSlide].description}
       </p>
       <button 
-        onClick={() => navigate(slides[currentSlide].ctaLink)} // Now works correctly!
+        onClick={() => navigate(slides[currentSlide].ctaLink)} 
         className="px-6 py-3 bg-white text-gray-800 font-semibold rounded-lg hover:bg-gray-100 transition-colors"
       >
         {slides[currentSlide].ctaText}
@@ -137,7 +137,7 @@ export default function LandingPage() {
 
             <button
               onClick={() => setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30 bg-opacity-30 text-teal-800 p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
+              className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/30  text-teal-800 p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
               aria-label="Previous slide"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -146,7 +146,7 @@ export default function LandingPage() {
             </button>
             <button
               onClick={() => setCurrentSlide((prev) => (prev + 1) % slides.length)}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/30 bg-opacity-30 text-teal-800 p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
+              className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/30  text-teal-800 p-2 rounded-full hover:bg-opacity-50 transition-all z-10"
               aria-label="Next slide"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

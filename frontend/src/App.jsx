@@ -9,7 +9,7 @@ import UserDashboard from './components/UserDashboard';
 import AdminDashboard from './components/AdminDashboard';
 import CardPopUp from './pages/CardPopUp';  
 import TopUp from './pages/TopUp';
-
+import FiberPlansPage from './pages/FiberPlansPage';
 function App() {
   return (
     <Router>
@@ -17,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/mobile-plans" element={<MobilePlansPage />} />
+        <Route path="/fiber" element={<FiberPlansPage />} />
         <Route path="/faq" element={<TelecomFAQ />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/panier" element={<CartPage />} />

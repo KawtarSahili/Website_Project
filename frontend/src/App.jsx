@@ -10,6 +10,7 @@ import AdminDashboard from './components/AdminDashboard';
 import CardPopUp from './pages/CardPopUp';  
 import TopUp from './pages/TopUp';
 import FiberPlansPage from './pages/FiberPlansPage';
+import StudentsOffer from './pages/StudentsOffer';
 function App() {
   return (
     <Router>
@@ -26,6 +27,8 @@ function App() {
         <Route path="/admin-dashboard" element={<AdminDashboard />} />
         <Route path="/recharge/:offer" element={<TopUp />} />
         <Route path="/top-up" element={<CardPopUp />} />
+        <Route path="/students" element={<StudentsOffer />} />
+
         </Routes>
     </Router>
   );

@@ -45,30 +45,45 @@ const AuthForm = ({ onClose }) => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSendVerification = () => {
+  const handleSendVerification = async () => {
     if (!phoneNumber) {
       setErrors({ ...errors, phoneNumber: 'Phone number is required' });
       return;
     }
-    alert(`Verification code sent to ${phoneNumber}`);
+  
+    try {
+      await axios.post('http://localhost:8080/api/verify/send', null, {
+        params: { phone: phoneNumber }
+      });
+      alert(`📩 Verification code sent to ${phoneNumber}`);
+    } catch (error) {
+      console.error("Erreur lors de l'envoi du code :", error);
+      alert('❌ Échec de l’envoi du code');
+    }
   };
+  
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (!validateSignUp()) return;
+  
     try {
-      const response = await axios.post('/api/auth/register', {
-        username: formData.fullName,
+      const response = await axios.post('http://localhost:8080/api/auth/register', {
+        fullName: formData.fullName,
         email: formData.email,
-        password_hash: formData.password,
-        phone: phoneNumber
-      });
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,  // si tu veux vérifier côté backend aussi
+        phoneNumber: phoneNumber,
+        verificationCode: verificationCode,
+        simNumber: simNumber
+      });      
       alert('Registration successful');
       setIsActive(false);
     } catch (error) {
-      alert('Registration failed: ' + error.response?.data || error.message);
+      alert('Registration failed: ' + (error.response?.data || error.message));
     }
   };
+  
 
   const handleSignIn = async (e) => {
     e.preventDefault();

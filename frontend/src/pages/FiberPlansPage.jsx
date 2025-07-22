@@ -114,6 +114,28 @@ const FiberPlansPage = () => {
       description: "Our expert team is always available to assist you with any issues."
     }
   ];
+  const faqs = [
+  {
+    question: "What is fiber internet?",
+    answer: "Fiber internet uses fiber-optic cables to deliver faster and more stable internet compared to ADSL or cable connections."
+  },
+  {
+    question: "Is installation included with the fiber plan?",
+    answer: "Yes, installation is included. A technician will visit your home to complete the setup."
+  },
+  {
+    question: "Do I need a special modem or router for fiber?",
+    answer: "Yes, we provide a fiber-compatible router to ensure optimal performance."
+  },
+  {
+    question: "Are there any data limits on fiber plans?",
+    answer: "No, all our fiber plans come with unlimited data usage so you can stream and browse freely."
+  },
+  {
+    question: "How long does it take to get connected?",
+    answer: "Typically, installation and activation take 1 to 3 business days after your order is confirmed."
+  }
+];
 
   // Auto-play carousel
   useEffect(() => {
@@ -254,7 +276,7 @@ const FiberPlansPage = () => {
         </section>
 
         {/* Why Choose Us Section */}
-        <section className="py-16 bg-stone-50">
+        <section className="py-16 bg-gradient-to-b from-white via-emerald-50 to-stone-50">
           <div className="container mx-auto px-4 md:px-20">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-teal-600 mb-4">Why Choose Our Fiber Network?</h2>
@@ -263,24 +285,52 @@ const FiberPlansPage = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4 md:px-0">
               {whyChooseUs.map((item, index) => (
-                <SpotlightCard 
+
+                  <div className=" border border-emerald-100 rounded-xl  transition duration-300 h-full">
+                                    <SpotlightCard 
                   key={index} 
                   className="h-full" 
-                  spotlightColor="rgba(0, 168, 107, 0.2)"
+                  spotlightColor="rgba(236, 253, 245, 1)"
                 >
-                  <div className="bg-white p-6 md:p-8 rounded-xl  transition duration-300 h-full">
-                    <div className="mb-4">
+                    <div className="mb-4 ">
                       {item.icon}
                     </div>
                     <h3 className="text-xl font-semibold text-stone-800 mb-3">{item.title}</h3>
                     <p className="text-stone-600">{item.description}</p>
+                    </SpotlightCard>
                   </div>
-                </SpotlightCard>
+                
               ))}
             </div>
             
           </div>
         </section>
+
+        {/* FAQ Section */}
+        <section className="py-16 bg-stone-50">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-teal-600 mb-4">Frequently Asked Questions</h2>
+            </div>
+            <div className="space-y-4">
+              {faqs.map((faq, index) => (
+                <div key={index} className="bg-white rounded-lg shadow-sm overflow-hidden border border-stone-200">
+                  <details className="group">
+                    <summary className="list-none cursor-pointer">
+                      <div className="px-6 py-4 flex justify-between items-center hover:bg-stone-50">
+                        <h3 className="font-semibold text-teal-800">{faq.question}</h3>
+                        <FiChevronRight className="w-5 h-5 text-teal-600 transform group-open:rotate-90 transition-transform" />
+                      </div>
+                    </summary>
+                    <div className="px-6 pb-4 text-stone-600">
+                      {faq.answer}
+                    </div>
+                  </details>
+                </div>
+              ))}
+            </div>
+          </div>
+      </section>
       </main>
 
       {/* Footer Component */}

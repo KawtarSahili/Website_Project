@@ -265,7 +265,7 @@ const ADSLPlansPage = () => {
 
 
         {/* Why Choose ADSL */}
-        <section className="py-16 bg-stone-50">
+        <section className="py-16 bg-gradient-to-b from-emerald-50 to-stone-50 ">
           <div className="container mx-auto px-4 md:px-20">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-teal-600 mb-4">Why Choose Our ADSL Network?</h2>
@@ -295,7 +295,7 @@ const ADSLPlansPage = () => {
         </section>
 
         {/* ADSL vs Fiber */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-gradient-to-b from-stone-50 to-emerald-50 ">
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-teal-600 mb-4">ADSL vs Fiber: Which is Right for You?</h2>
@@ -313,17 +313,17 @@ const ADSLPlansPage = () => {
                   </tr>
                 </thead>
                 <tbody className="text-stone-700">
-                  <tr className="even:bg-stone-50">
+                  <tr className="bg-stone-50">
                     <td className="py-4 px-6 font-medium">Speed Range</td>
                     <td className="py-4 px-6">1–20 Mbps</td>
                     <td className="py-4 px-6">50–1000 Mbps</td>
                   </tr>
-                  <tr className="even:bg-stone-50">
+                  <tr className="bg-stone-50">
                     <td className="py-4 px-6 font-medium">Availability</td>
                     <td className="py-4 px-6">Nationwide</td>
                     <td className="py-4 px-6">Urban areas</td>
                   </tr>
-                  <tr className="even:bg-stone-50">
+                  <tr className="bg-stone-50">
                     <td className="py-4 px-6 font-medium">Price Range</td>
                     <td className="py-4 px-6">199–399 MAD/month</td>
                     <td className="py-4 px-6">299–1299 MAD/month</td>

@@ -10,7 +10,7 @@ const ContactUs = () => {
     <>
       <Header />
 
-      {/* Hero Section with negative margin for card overlap */}
+      {/* Hero Section */}
       <section className="bg-gradient-to-b from-teal-600 to-teal-700 py-30 w-full text-white text-center pb-16 md:pb-20">
         <div className="max-w-4xl mx-auto px-4 pb-10">
           <h2 className="lg:text-4xl text-3xl font-bold mb-3">Contact Us</h2>
@@ -18,7 +18,7 @@ const ContactUs = () => {
         </div>
       </section>
 
-      {/* Contact Methods Grid with negative margin to overlap hero */}
+      {/* Contact Methods Grid  */}
       <section className="relative z-10 -mt-16 md:-mt-20">
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -97,7 +97,6 @@ const ContactUs = () => {
           </div>
 
           <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-            {/* Left side image - made bigger */}
             <div className="w-full lg:w-[55%] flex items-center justify-center">
               <img
                 src="/faq-icon.png"
@@ -107,7 +106,7 @@ const ContactUs = () => {
               />
             </div>
 
-            {/* Contact form - made smaller */}
+            {/* Contact form */}
             <div className="w-full lg:w-[45%] bg-white rounded-xl shadow-lg p-6">
               <form className="space-y-4">
                 <div>

@@ -71,7 +71,7 @@ const StudentsOffer = () => {
       <Header />
 
       <main className="flex-grow">
-        <section className="relative h-96 md:h-[500px] flex items-center justify-center text-white bg-gradient-to-b from-teal-800 via-teal-600 to-stone-50">
+        <section className="relative h-96 md:h-[450px] flex items-center justify-center text-white bg-gradient-to-b from-teal-800 via-teal-600 to-stone-50">
           <div className="max-w-5xl mx-auto  px-6 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Student Exclusive Offers</h1>
             <p className="text-xl md:text-2xl mb-6">

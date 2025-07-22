@@ -111,7 +111,7 @@ const NewCustomersOffers = () => {
       <main className="flex-grow">
         {/* Hero Section */}
         <section 
-          className="relative h-96 md:h-[500px] flex items-center justify-center text-white bg-gradient-to-b from-teal-600 to-teal-800"
+          className="relative h-96 md:h-[500px] flex items-center justify-center text-white bg-gradient-to-b from-teal-800 via-teal-600 to-stone-50"
        
         >
           <div className="container mx-auto px-6 text-center">
@@ -134,7 +134,7 @@ const NewCustomersOffers = () => {
         </section>
 
         {/* Special Offers Section */}
-        <section className="py-16  mx-20">
+        <section className="py-16  mx-20 bg-stone-50 ">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
               <h2 className="text-3xl font-bold text-teal-600 mb-4">Limited-Time Special Offers</h2>
@@ -194,13 +194,7 @@ const NewCustomersOffers = () => {
         </section>
 
         {/* Signup Incentives Section */}
-        <section className="py-16 bg-gradient-to-br from-teal-50 to-teal-100 " style={{
-                  backgroundImage: `url(${graybg})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat",
-                  
-                }}>
+        <section className="py-16 bg-gradient-to-b from-white to-emerald-50 ">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12 ">
               <h2 className="text-3xl font-bold text-teal-800 mb-4">New Customer Bonuses</h2>
@@ -236,7 +230,7 @@ const NewCustomersOffers = () => {
                     <h3 className="text-xl font-bold text-teal-800">Premium Router</h3>
                   </div>
                   <p className="text-stone-600 mb-6 flex-grow">
-                    Get our advanced dual-band WiFi router ($200 value) included at no extra cost.
+                    Get our advanced dual-band WiFi router (200 MAD value) included at no extra cost.
                   </p>
                   <div className="bg-teal-50 rounded-lg p-3 text-center">
                     <span className="font-semibold text-teal-700">FREE equipment</span>
@@ -280,33 +274,41 @@ const NewCustomersOffers = () => {
         </section>
 
         {/* Testimonials Section */}
-        <section className="py-16 bg-gradient-to-br from-teal-50 to-teal-100 " >
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-teal-600 mb-4">What Our New Customers Say</h2>
-              <p className="text-stone-600 max-w-2xl mx-auto">
-                Don't just take our word for it - hear from happy customers who took advantage of these offers
-              </p>
-            </div>
+<section className="py-20 bg-gradient-to-b from-emerald-50 to-white">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="text-center mb-16">
+      <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+        What Our New Customers Say
+      </h2>
+      <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+        Don't just take our word for it - hear from happy customers who took advantage of these offers
+      </p>
+    </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mx-20">
-              {testimonials.map((testimonial, index) => (
-                <div key={index} className="rounded-2xl shadow-lg p-8 bg-white/70 backdrop-blur-md border border-teal-400 p-8">
-                  <div className="flex items-center mb-6">
-                    <div className="w-12 h-12 rounded-full bg-teal-100 flex items-center justify-center mr-4">
-                      <FiStar className="text-teal-600" />
-                    </div>
-                    <div>
-                      <h4 className="font-bold text-teal-800">{testimonial.name}</h4>
-                      <p className="text-stone-500 text-sm">{testimonial.location}</p>
-                    </div>
-                  </div>
-                  <p className="text-stone-700 italic">"{testimonial.quote}"</p>
-                </div>
-              ))}
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      {testimonials.map((testimonial, index) => (
+        <div key={index} className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-emerald-100">
+          <div className="flex items-center mb-6">
+            <div className="w-12 h-12 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full flex items-center justify-center text-white font-bold text-lg">
+              {testimonial.initial || testimonial.name.charAt(0)}
+            </div>
+            <div className="ml-4">
+              <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
+              <p className="text-gray-600 text-sm">{testimonial.location}</p>
             </div>
           </div>
-        </section>
+          <div className="flex mb-4">
+            {[...Array(5)].map((_, i) => (
+              <span key={i} className="text-yellow-400 text-lg">★</span>
+            ))}
+          </div>
+          <p className="text-gray-700 italic">"{testimonial.quote}"</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
 
         {/* FAQ Section */}
         <section className="py-16 bg-stone-50">

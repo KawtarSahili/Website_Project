@@ -71,13 +71,13 @@ const StudentsOffer = () => {
       <Header />
 
       <main className="flex-grow">
-        <section className="bg-gradient-to-b from-teal-600 to-teal-800 text-white py-30 text-center">
-          <div className="max-w-5xl mx-auto  px-6">
+        <section className="relative h-96 md:h-[500px] flex items-center justify-center text-white bg-gradient-to-b from-teal-800 via-teal-600 to-stone-50">
+          <div className="max-w-5xl mx-auto  px-6 text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">Student Exclusive Offers</h1>
             <p className="text-xl md:text-2xl mb-6">
               Stay connected during your studies with plans designed just for students
             </p>
-            <button className="bg-white text-teal-800 font-semibold px-6 py-3 rounded-md hover:bg-gray-100 transition">
+            <button className="bg-white text-teal-800 center font-semibold px-6 py-3 rounded-md hover:bg-gray-100 transition">
               Verify Student Status
             </button>
           </div>
@@ -153,7 +153,7 @@ const StudentsOffer = () => {
         </div>
         </section>
 
-        <section className="py-16 bg-teal-50">
+        <section className="py-16 bg-gradient-to-b from-stone-50 to-emerald-50">
           <div className="max-w-4xl mx-auto px-6">
             <div className="bg-white p-8 rounded-xl shadow-md md:flex items-center justify-between">
               <div className="mb-6 md:mb-0 md:w-2/3">

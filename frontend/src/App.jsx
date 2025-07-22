@@ -32,7 +32,6 @@ function App() {
         <Route path="/top-up" element={<CardPopUp />} />
         <Route path="/new-customers" element={<NewCustomersOffer />} />
         <Route path="/students" element={<StudentsOffer />} />
-
         </Routes>
     </Router>
   );

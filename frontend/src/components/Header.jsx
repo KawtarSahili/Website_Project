@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { ChevronDown, Search, ShoppingBag, User, Menu, X } from "lucide-react";
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-const Header = ({ onLoginClick, hideLogin = false }) => {
+const Header = ({ hideLogin = false }) => {
+  const { openAuthModal } = useAuth();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState(null);
@@ -81,7 +83,7 @@ const Header = ({ onLoginClick, hideLogin = false }) => {
       >
         <div className="flex items-center justify-between max-w-7xl mx-auto gap-6">
           <Link to="/" className="text-white font-bold text-xl hover:text-teal-300 transition">
-          TelCom
+            TelCom
           </Link>
 
           <nav className="hidden md:flex gap-6 text-white text-sm font-medium">
@@ -111,7 +113,6 @@ const Header = ({ onLoginClick, hideLogin = false }) => {
                     >
                       {subItem.name}
                     </Link>
-                    
                   ))}
                 </div>
               </div>
@@ -127,7 +128,6 @@ const Header = ({ onLoginClick, hideLogin = false }) => {
             />
           </div>
 
- 
           <div className="flex items-center gap-4 text-white relative">
             <Link to="/panier"
               className="hidden md:inline hover:text-teal-300 transition"
@@ -137,10 +137,7 @@ const Header = ({ onLoginClick, hideLogin = false }) => {
 
             {!hideLogin && (
               <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  onLoginClick();
-                }}
+                onClick={openAuthModal}
                 className="flex items-center gap-2 bg-white text-teal-900 px-3 py-1.5 rounded-full text-sm font-semibold hover:bg-teal-200 transition"
               >
                 <User size={16} /> Login
@@ -198,20 +195,19 @@ const Header = ({ onLoginClick, hideLogin = false }) => {
         </div>
 
         <div className="px-4 mt-4">
-  <Link
-    to="/panier"
-    className="flex items-center gap-2 text-white hover:text-teal-300"
-  >
-    <ShoppingBag size={20} /> Mon Panier
-  </Link>
-</div>
+          <Link
+            to="/panier"
+            className="flex items-center gap-2 text-white hover:text-teal-300"
+          >
+            <ShoppingBag size={20} /> Mon Panier
+          </Link>
+        </div>
 
         <div className="px-4 mt-4">
           <button
-            onClick={(e) => {
-              e.preventDefault();
+            onClick={() => {
               setMobileMenuOpen(false);
-              onLoginClick();
+              openAuthModal();
             }}
             className="flex items-center gap-2 bg-white text-teal-900 px-3 py-1.5 rounded-full text-sm font-semibold hover:bg-teal-200 transition w-full justify-center"
           >

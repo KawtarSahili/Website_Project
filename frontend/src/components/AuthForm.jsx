@@ -58,7 +58,7 @@ const AuthForm = ({ onClose }) => {
       alert(`📩 Verification code sent to ${phoneNumber}`);
     } catch (error) {
       console.error("Erreur lors de l'envoi du code :", error);
-      alert('❌ Échec de l’envoi du code');
+      alert('❌ Échec de l\'envoi du code');
     }
   };
   

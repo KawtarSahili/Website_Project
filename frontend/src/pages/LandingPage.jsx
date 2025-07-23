@@ -2,18 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import AuthForm from "../components/AuthForm";
-import bg1 from "../assets/bg1.png";
-import bg2 from "../assets/bg2.png";
-import bg3 from "../assets/bg3.png";
-import graybg from "../assets/gray-bg.jpg";
 import SpotlightCard from "../components/SpotlightCard";
 import ScrollFloat from "../components/ScrollFloat";
 import { ChevronLeft, ChevronRight, Check, Zap, DollarSign, Shield, Globe, Rocket, Phone, Mail } from "lucide-react";
 
 export default function LandingPage() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [showAuthModal, setShowAuthModal] = useState(false);
   const navigate = useNavigate();
 
   const slides = [
@@ -21,21 +15,21 @@ export default function LandingPage() {
       title: "Ultra-Fast 5G Network",
       description: "Experience blazing fast speeds with our next-generation 5G coverage",
       ctaText: "Discover Plans",
-      bgImage: bg1,
+      bgImage: "https://images.pexels.com/photos/4386321/pexels-photo-4386321.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       ctaLink: "/mobile-plans"
     },
     {
       title: "Unlimited Data Plans",
       description: "Stream, game and browse without limits with our data packages",
       ctaText: "View Offers",
-      bgImage: bg2,
+      bgImage: "https://images.pexels.com/photos/4386370/pexels-photo-4386370.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       ctaLink: "/offers"
     },
     {
       title: "Family Bundle Deals",
       description: "Save up to 30% when you connect your whole family",
       ctaText: "Join Now",
-      bgImage: bg3,
+      bgImage: "https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
       ctaLink: "/family-plans"
     }
   ];
@@ -174,14 +168,6 @@ export default function LandingPage() {
     }
   ];
 
-  const handleLoginClick = () => {
-    setShowAuthModal(true);
-  };
-
-  const closeModal = () => {
-    setShowAuthModal(false);
-  };
-
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
@@ -191,20 +177,7 @@ export default function LandingPage() {
 
   return (
     <>
-      <Header onLoginClick={handleLoginClick} />
-      
-      {showAuthModal && (
-        <div className="fixed inset-0 bg-transparent bg-opacity-50 z-[1000] flex justify-center items-center p-4">
-          <div className="relative w-full max-w-5xl max-h-[90vh] overflow-y-auto">
-            <button 
-              onClick={closeModal}
-              className="absolute top-4 right-4 bg-white rounded-full p-2 z-50 shadow-lg hover:bg-gray-200"
-            >
-            </button>
-            <AuthForm onClose={closeModal} />
-          </div>
-        </div>
-      )}
+      <Header />
 
       <section className="relative w-full pb-14 pt-16">
         <div className="mx-auto mt-16 px-4 sm:px-6 lg:px-8">
@@ -266,13 +239,7 @@ export default function LandingPage() {
       </section>
 
       {/* Services Section */}
-      <section className="bg-white relative py-10"
-        style={{
-          backgroundImage: `url(${graybg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}>
+      <section className="bg-gray-100 relative py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h1 className="text-2xl lg:text-3xl text-teal-700 font-bold mb-4">Our mobile plans</h1> 

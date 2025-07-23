@@ -13,10 +13,14 @@ import FiberPlansPage from './pages/FiberPlansPage';
 import ADSLPlansPage from './pages/ADSLPlansPage';
 import StudentsOffer from './pages/StudentsOffer';
 import NewCustomersOffer from './pages/NewCustomersOffer';
+import { AuthProvider } from './context/AuthContext';
+import AuthModal from './components/AuthModal';
+
 function App() {
   return (
+    <AuthProvider>
     <Router>
-      
+    <div className="min-h-screen bg-gray-100">
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/mobile-plans" element={<MobilePlansPage />} />
@@ -33,7 +37,10 @@ function App() {
         <Route path="/new-customers" element={<NewCustomersOffer />} />
         <Route path="/students" element={<StudentsOffer />} />
         </Routes>
+        <AuthModal />
+        </div>
     </Router>
+    </AuthProvider>
   );
 }
 
